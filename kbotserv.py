@@ -3,63 +3,12 @@ import json
 import csv
 import time
 import logging
-import RPi.GPIO as GPIO
+import pin
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
-
-class pin:
-    def __init__(self, name, pin_id, type="GPIO", range=[0,1]):
-        self.name = name
-        self.type = type
-        self.pin_id = pin_id
-        self.state = 1
-        self.range = range
-        if (type == "GPIO"):
-            GPIO.setup(self.pin_id, GPIO.OUT)
-            GPIO.output(self.pin_id, GPIO.HIGH)
-        elif (type == "SERVO"):
-            duty_min = 3
-            PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
-            self.rotate(90)
-
-    def output(self, state):
-        if(self.type == "GPIO"):
-            if(state == 1): # HIGH
-                self.state = 1
-                GPIO.output(self.pin_id, GPIO.HIGH)
-            elif(state == 0): # LOW
-                self.state = 0
-                GPIO.output(self.pin_id, GPIO.LOW)
-
-    def rotate(self, angle):
-        if(self.type != "SERVO"):
-            return
-            
-        #clamp angle to range
-        if (angle < self.range[0]):
-            angle = self.range[0]
-        if (angle > self.range[1]):
-            angle = self.range[1]
-            
-        duty_min = 3
-        duty_max = 14.5
-        duty_span = duty_max - duty_min
-        angle_f = float(angle)
-        duty = 100 - ((angle_f / 180) * duty_span + duty_min) 
-        PWM.set_duty_cycle(self.pin_id, duty)
-        self.state = angle_f
         
-    def stop():
-        if(self.type == "PWM"):
-            PWM.stop(self.pin_id)
-        elif(self.type == "GPIO"):
-            return
-        
-    def __str__(self):
-        return '{'+"\"name\":\"{0}\", \"pin\":\"{1}\", \"type\":\"{2}\", \"state\":{3}".format(self.name, self.pin_id, self.type, self.state)+'}'
-        
-gStorage = {} #memory storage
-gPinConfig = "pins.cfg" #pin config file 
+gStorage = {} # memory storage
+gPinConfig = "pins.cfg" # pin config file 
     
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -76,29 +25,25 @@ def loadPinConfig():
             range = [int(row['range_min']), int(row['range_max'])]
             Access_Create(row['name'], row['pin'], row['type'], range)
 
-def Access_Create(string, pin_id, type, range):
-    gStorage[string] = pin(string, pin_id, type, range)
-    logging.info('Loading pin ('+pin_id+') created.')
+def Access_Create(pin_name, pin_id, type, range):
+    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
 
-def Access_Name(string):
-    return gStorage[string].name
+def Access_Name(pin_name):
+    return gStorage[pin_name].name
 
-def Access_Object(string):
-    return gStorage[string]
+def Access_Object(pin_name):
+    return gStorage[pin_name]
 
-def Access_Delete(string):
-    gStorage.pop(string)
-    logging.info('Loading pin ('+string+') removed.')
+def Access_Delete(pin_name):
+    gStorage.pop(pin_name)
 
 def Access_Store():
     return gStorage
 
 def Access_Save():
-    logging.info('Saving pin configuration.')
     savePinConfig()
 
 def Access_Load():
-    logging.info('Saving pin configuration.')
     loadPinConfig()
     
 def Access_Log(tail=True, maxlines=10):
@@ -113,9 +58,6 @@ def Access_Log(tail=True, maxlines=10):
             data = "<br>".join(log)
     return data
 
-""" Web.py requires us to route the urls and we
-need to define them in this urls variable"""
-
 urls = (
     '/add', 'add',
     '/switch', 'switch',
@@ -124,64 +66,66 @@ urls = (
     '/save', 'save',
     '/rotate', 'rotate',
     '/log', 'log',
-    '/load', 'load'
-    '/login' ''
+    '/load', 'load',
+    '/login', 'login',
+    '/add_user', 'add_user'
 )
 
-# Webpage classes
-
+#webpages
 class add_user:
-    def PUT(self):
-
-class login:
-    def GET(self):
+    def POST(self):
+        return
         
+class login:
+    def POST(self):
+        return
         
     
 class add:
-    def GET(self):
-        i = web.input(name=None, pin=None, type=None, state=None, range_min=None, range_max=None) #To get input using the GET request we need to use web.input
-        range = [i.range_min, i.range_max]
-        Access_Create(i.name, i.pin, i.type, i.state, range) #We are creating an Appliance object with the Access_Create() function
-        logging.info("Created a pin: " + i.name + " at pin number: " + i.pin) #logging.info(out the event to the console
+    def POST(self):
+        i = web.input(name=None, pin=None, type=None, min=None, max=None)
+        range = [i.min, i.max]
+        Access_Create(i.name, i.pin, i.type, range) 
+        logging.info(str(i.type)+" '" + i.name + "' at pin (" + i.pin + ")")
 
 class delete:
-    def GET(self):
-        i = web.input(name=None) #Access the name of the appliance from the url
-        item = Access_Object(i.name) #Use Access_Object() function to access the appliance object
-        item.output(0) #Turn the Appliance object off
-        Access_Delete(i.name) #Delete the Appliance object 
-        logging.info("Deleted pin: " + i.name) #logging.info(out the event to the console
+    def POST(self):
+        i = web.input(name=None)
+        item = Access_Object(i.name) 
+        item.output(0)
+        Access_Delete(i.name)
+        logging.info("Deleted pin (" + i.name + ")")
 
 class rotate:
-    def GET(self):
+    def POST(self):
         i = web.input(name=None, angle=None)
-        item = Access_Object(i.name)
-        item.rotate(int(i.angle))
+        servo = Access_Object(i.name)
+        servo.rotate(int(i.angle))
 
 class load:
     def GET(self):
         Access_Load()
+        logging.info("Pin configuration loaded.")
 
 class switch:
     def GET(self):
-        i = web.input(name=None) #Access the name of the appliance from the url
-        item = Access_Object(i.name)#Use Access_Object() function to access the appliance object
-        if(item.state == 0): #if the item is off turn it on
-            item.output(1)
-            logging.info(i.name + " is turned ON") #logging.info(out the event on the console
-        elif(item.state == 1):#else if the item is on then turn it off
-            item.output(0)
-            logging.info(i.name + " is turned OFF") #logging.info(event to the console
+        i = web.input(name=None)
+        io = Access_Object(i.name)
+        if(io.state == 0):
+            io.output(1)
+            logging.info(i.name + " switched ON")
+        elif(io.state == 1):
+            io.output(0)
+            logging.info(i.name + " switched OFF") 
 
 class save:
     def GET(self):
         Access_Save()
-        logging.info("Configuration saved.")
+        logging.info("Pin configuration saved.")
 
 class log:
     def GET(self):
-        web.header('Content-Type','application/json; charset=utf-8')
+        web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*');
         i = web.input(tail=None, maxlines=None)
         log = Access_Log(i.tail, int(i.maxlines))

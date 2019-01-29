@@ -2,7 +2,10 @@ import web
 import json
 import csv
 import time
+import logging
 import RPi.GPIO as GPIO
+
+logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
 class pin:
     def __init__(self, name, pin_id, type="GPIO", range=[0,1]):
@@ -75,6 +78,7 @@ def loadPinConfig():
 
 def Access_Create(string, pin_id, type, range):
     gStorage[string] = pin(string, pin_id, type, range)
+    logging.info('Loading pin ('+pin_id+') created.')
 
 def Access_Name(string):
     return gStorage[string].name
@@ -84,18 +88,30 @@ def Access_Object(string):
 
 def Access_Delete(string):
     gStorage.pop(string)
+    logging.info('Loading pin ('+string+') removed.')
 
 def Access_Store():
     return gStorage
 
 def Access_Save():
+    logging.info('Saving pin configuration.')
     savePinConfig()
 
 def Access_Load():
+    logging.info('Saving pin configuration.')
     loadPinConfig()
     
-def Acess_Rotate():
-    return
+def Access_Log(tail=True, maxlines=10):
+    log = []
+    data = ""
+    with open('kbot.log') as file:
+        if (tail == "True" or tail == True):
+            log = file.readlines()[-1]
+            data = "<br>".join(log)
+        else:
+            log = file.readlines()[-maxlines:]
+            data = "<br>".join(log)
+    return data
 
 """ Web.py requires us to route the urls and we
 need to define them in this urls variable"""
@@ -107,17 +123,27 @@ urls = (
     '/json', 'json',
     '/save', 'save',
     '/rotate', 'rotate',
+    '/log', 'log',
     '/load', 'load'
+    '/login' ''
 )
 
 # Webpage classes
 
+class add_user:
+    def PUT(self):
+
+class login:
+    def GET(self):
+        
+        
+    
 class add:
     def GET(self):
         i = web.input(name=None, pin=None, type=None, state=None, range_min=None, range_max=None) #To get input using the GET request we need to use web.input
         range = [i.range_min, i.range_max]
         Access_Create(i.name, i.pin, i.type, i.state, range) #We are creating an Appliance object with the Access_Create() function
-        print("Created a pin: " + i.name + " at pin number: " + i.pin) #print(out the event to the console
+        logging.info("Created a pin: " + i.name + " at pin number: " + i.pin) #logging.info(out the event to the console
 
 class delete:
     def GET(self):
@@ -125,7 +151,7 @@ class delete:
         item = Access_Object(i.name) #Use Access_Object() function to access the appliance object
         item.output(0) #Turn the Appliance object off
         Access_Delete(i.name) #Delete the Appliance object 
-        print("Deleted pin: " + i.name) #print(out the event to the console
+        logging.info("Deleted pin: " + i.name) #logging.info(out the event to the console
 
 class rotate:
     def GET(self):
@@ -143,23 +169,28 @@ class switch:
         item = Access_Object(i.name)#Use Access_Object() function to access the appliance object
         if(item.state == 0): #if the item is off turn it on
             item.output(1)
-            print(i.name + " is turned ON") #print(out the event on the console
+            logging.info(i.name + " is turned ON") #logging.info(out the event on the console
         elif(item.state == 1):#else if the item is on then turn it off
             item.output(0)
-            print(i.name + " is turned OFF") #print(event to the console
+            logging.info(i.name + " is turned OFF") #logging.info(event to the console
 
 class save:
     def GET(self):
         Access_Save()
-        print("Configuration saved")
+        logging.info("Configuration saved.")
 
 class log:
     def GET(self):
-        return Access_Log(num_lines)
+        web.header('Content-Type','application/json; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*');
+        i = web.input(tail=None, maxlines=None)
+        log = Access_Log(i.tail, int(i.maxlines))
+        return log
 
 class json:
-    def GET(self): 
-        web.header('Content-Type','application/json; charset=utf-8') 
+    def GET(self):
+        web.header('Content-Type','application/json; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*');
         json = '['
         for pin, val in gStorage.items():
             json+=str(val)+','

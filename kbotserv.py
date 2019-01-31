@@ -1,14 +1,12 @@
-import web
-import json
-import csv
-import time
-import logging
-import pin
+import web, json, csv, time, logging
+import pin, users
+from adafruit_motorkit import MotorKit
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
         
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file 
+kit = MotorKit()
     
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -25,13 +23,18 @@ def loadPinConfig():
             range = [int(row['range_min']), int(row['range_max'])]
             Access_Create(row['name'], row['pin'], row['type'], range)
 
+def clamp(value=0, min=-1.0, max=1.0):
+    if value < min: value = min
+    if value > max: value = max
+    return value
+
 def Access_Create(pin_name, pin_id, type, range):
     gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
 
 def Access_Name(pin_name):
     return gStorage[pin_name].name
 
-def Access_Object(pin_name):
+def Access_Storage(pin_name):
     return gStorage[pin_name]
 
 def Access_Delete(pin_name):
@@ -45,6 +48,12 @@ def Access_Save():
 
 def Access_Load():
     loadPinConfig()
+
+def Access_Move(leftFore, leftAft, rightFore, rightAft):
+    kit.motor1.throttle = clamp(leftFore)  #Left Fore
+    kit.motor2.throttle = clamp(leftAft)   #Left Aft
+    kit.motor3.throttle = clamp(rightFore) #Right Fore
+    kit.motor4.throttle = clamp(rightAft)  #Right Aft
     
 def Access_Log(tail=True, maxlines=10):
     log = []
@@ -68,7 +77,9 @@ urls = (
     '/log', 'log',
     '/load', 'load',
     '/login', 'login',
-    '/add_user', 'add_user'
+    '/add_user', 'add_user',
+    '/move', 'move',
+    '/login', 'login'
 )
 
 #webpages
@@ -78,9 +89,20 @@ class add_user:
         
 class login:
     def POST(self):
-        return
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, password=None)
+        user = users.login(i.username, i.password)
+        if user: print(user); return user
+        else: return ''
+
+class move:
+    def POST(self):
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(leftFore=None, leftAft=None, rightFore=None, rightAft=None)
+        Access_Move(float(i.leftFore), float(i.leftAft), float(i.rightFore), float(i.rightAft))
         
-    
 class add:
     def POST(self):
         i = web.input(name=None, pin=None, type=None, min=None, max=None)
@@ -91,7 +113,7 @@ class add:
 class delete:
     def POST(self):
         i = web.input(name=None)
-        item = Access_Object(i.name) 
+        item = Access_Storage(i.name) 
         item.output(0)
         Access_Delete(i.name)
         logging.info("Deleted pin (" + i.name + ")")
@@ -99,7 +121,7 @@ class delete:
 class rotate:
     def POST(self):
         i = web.input(name=None, angle=None)
-        servo = Access_Object(i.name)
+        servo = Access_Storage(i.name)
         servo.rotate(int(i.angle))
 
 class load:
@@ -110,7 +132,7 @@ class load:
 class switch:
     def GET(self):
         i = web.input(name=None)
-        io = Access_Object(i.name)
+        io = Access_Storage(i.name)
         if(io.state == 0):
             io.output(1)
             logging.info(i.name + " switched ON")
@@ -126,7 +148,7 @@ class save:
 class log:
     def GET(self):
         web.header('Content-Type','text/plain; charset=utf-8')
-        web.header('Access-Control-Allow-Origin', '*');
+        web.header('Access-Control-Allow-Origin', '*')
         i = web.input(tail=None, maxlines=None)
         log = Access_Log(i.tail, int(i.maxlines))
         return log
@@ -134,7 +156,7 @@ class log:
 class json:
     def GET(self):
         web.header('Content-Type','application/json; charset=utf-8')
-        web.header('Access-Control-Allow-Origin', '*');
+        web.header('Access-Control-Allow-Origin', '*')
         json = '['
         for pin, val in gStorage.items():
             json+=str(val)+','

@@ -6,44 +6,56 @@ schema = ['username', 'password', 'email', 'salt', 'token']
 def login(username, password):
     if(validLogin(username, password)):
         user = getUser(username)
-        return (user.username, user.email, user.token)
+        setToken(username)
+        token = getToken(username)
+        return '[{"username":"'+user["username"]+'", "email": "'+user["email"]+'","token":"'+token+'"}]'
     else:
         return False
 
 
 def validLogin(username, password):
-    user = getUser(username);
-    hashpw = hash(user.salt, password)
-    if user.username == username and user.password == hashpw:
+    user = getUser(username)
+    hashpw = hash(password, bytes(user["salt"], 'utf-8'))
+    
+    if user["username"] == username and bytes(user["password"], 'utf-8') == hashpw[1]:
         return True
     else:
         return False
+ 
+
+def validToken(username, token):
+    validToken = getToken(username)
+    if token is validToken: return True
+    else: return False
 
 
 def addUser(username, password, email):
     return create(username, password, email)
 
 
-def hash(salt="", password=""):
-    if len(salt):
-        salt = os.urandom(128)
+def hash(password, salt=b''):
+    if not salt:
+        salt = b64encode(os.urandom(128))
     hashpw = b64encode(hashlib.sha512(salt+password.encode()).digest())
-    salt = b64encode(salt)
     return (salt, hashpw)
 
-
-def token(username):
-    token = getHash(username)+datetime.now()
-    return token
+def token():
+    toke = b64encode(os.urandom(128))
+    return toke
 
 
 def getPassword(username):
-    return getUser(userName).password
+    return getUser(userName)["password"]
 
     
 def setToken(username):
-    token = token(username)
-    update(username, "token", token)
+    tok = token()
+    update(username, "token", tok.decode())
+
+
+def getToken(username):
+    tok = token()
+    return read(username, "token")
 
 
 def getUser(username):
@@ -54,59 +66,63 @@ def getUser(username):
 def create(username, password, email):
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
-        reader = csv.DictReader(csvfile)
+        reader = csv.DictReader(csvfile, fieldnames=schema)
         for row in reader:
             if row['username'] == username: return False
             
     with open('users.db', 'a', newline='\n') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=schema)
-        writer.writeheader()
+        if not os.path.exists('./users.db'): writer.writeheader()
         saltnhash = hash(password)
         salt = saltnhash[0]
         hashpw = saltnhash[1]
-        user = {'username': username, 'password': hashpw, 'email': email, 'salt': salt, 'token': 0}
-        print(user)
+        user = {'username': username, 'password': hashpw.decode(), 'email': email, 'salt': salt.decode(), 'token': 0}
         writer.writerow(user)
         return True
 
 
 def read(username, field=""):
     global schema
-    with open('useds.db', newline='\n') as csvfile:
+    with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile)
-        if field:
-            return reader['username'].field
-        else:
-            return reader['username']
-
-
-def update(username="", field="", value=None):
-    global schema
-    with open("tracker.csv", "r", newline='\n') as csvfile:
-        reader = csv.DictReader(csvfile)
-        
-    with open('useds.db', 'w', newline='\n') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=schema)
         for row in reader:
             if row['username'] == username:
-                row[field] == value
-                writer.writerow(row)
-            else:
-                writer.writerow(row)
+                if field:
+                    return row[field]
+                else:
+                    return row
+
+
+def update(username, field="", value=None):
+    global schema
+    with open('users.db', 'r', newline='\n') as csvfile:
+        reader = csv.DictReader(csvfile, fieldnames=schema)
+        
+        with open('users.tmp', 'w', newline='\n') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=schema)
+            for row in reader:
+                if row['username'] == username:
+                    row[field] = value
+                    writer.writerow(row)
+                else:
+                    writer.writerow(row)
+    os.remove('users.db')
+    os.rename('users.tmp', 'users.db')
 
 
 def delele(username):
     global schema
-    with open("tracker.csv", "r", newline='\n') as csvfile:
-        reader = csv.DictReader(csvfile)
+    with open('users.db', 'r', newline='\n') as csvfile:
+        reader = csv.DictReader(csvfile, fieldnames=schema)
         
-    with open('useds.db', 'w', newline='\n') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=schema)
-        writer.writeheader() 
-        for row in reader:
-            if row['username'] != username:
-                writer.writerow(row)
+        with open('users.tmp', 'w', newline='\n') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=schema)
+            for row in reader:
+                if row['username'] != username:
+                    writer.writerow(row)
+    os.remove('users.db')
+    os.rename('users.tmp', 'users.db')
 
-if __name__ == "__main__":
-    addUser("scnl3", "test", "test@test.com")
-    login("scnl3", "test", "test@test.com")
+#if __name__ == "__main__":
+    #addUser("scnl", "test", "test@test.com")
+    #print(login("scnl3", "pass"))

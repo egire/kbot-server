@@ -1,5 +1,4 @@
-import hashlib, uuid, datetime, csv, os
-from base64 import b64decode, b64encode
+import hashlib, uuid, datetime, csv, os, base64
 
 schema = ['username', 'password', 'email', 'salt', 'token']
 
@@ -25,7 +24,7 @@ def validLogin(username, password):
 
 def validToken(username, token):
     validToken = getToken(username)
-    if token is validToken: return True
+    if token == validToken: return True
     else: return False
 
 
@@ -35,12 +34,12 @@ def addUser(username, password, email):
 
 def hash(password, salt=b''):
     if not salt:
-        salt = b64encode(os.urandom(128))
-    hashpw = b64encode(hashlib.sha512(salt+password.encode()).digest())
+        salt = base64.b64encode(os.urandom(128))
+    hashpw = base64.b64encode(hashlib.sha512(salt+password.encode()).digest())
     return (salt, hashpw)
 
 def token():
-    toke = b64encode(os.urandom(128))
+    toke = base64.urlsafe_b64encode(os.urandom(32))
     return toke
 
 
@@ -110,7 +109,7 @@ def update(username, field="", value=None):
     os.rename('users.tmp', 'users.db')
 
 
-def delele(username):
+def delete(username):
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
@@ -123,6 +122,7 @@ def delele(username):
     os.remove('users.db')
     os.rename('users.tmp', 'users.db')
 
-#if __name__ == "__main__":
-    #addUser("scnl", "test", "test@test.com")
-    #print(login("scnl3", "pass"))
+if __name__ == "__main__":
+    addUser("test", "test", "test@test.com")
+    print(login("test", "pass"))
+    delete("test")

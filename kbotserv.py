@@ -6,7 +6,7 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
         
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file 
-kit = MotorKit()
+kit = MotorKit() # running motors
     
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -93,77 +93,111 @@ class login:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, password=None)
         user = users.login(i.username, i.password)
-        if user: print(user); return user
+        if user: return user
         else: return ''
 
 class move:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
-        i = web.input(leftFore=None, leftAft=None, rightFore=None, rightAft=None)
-        Access_Move(float(i.leftFore), float(i.leftAft), float(i.rightFore), float(i.rightAft))
+        i = web.input(username=None, token=None, leftFore=None, leftAft=None, rightFore=None, rightAft=None)
+        if users.validToken(i.username, i.token):
+            Access_Move(float(i.leftFore), float(i.leftAft), float(i.rightFore), float(i.rightAft))
+        else: return ''
         
 class add:
     def POST(self):
-        i = web.input(name=None, pin=None, type=None, min=None, max=None)
-        range = [i.min, i.max]
-        Access_Create(i.name, i.pin, i.type, range) 
-        logging.info(str(i.type)+" '" + i.name + "' at pin (" + i.pin + ")")
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None, pin=None, type=None, min=None, max=None)
+        if users.validToken(i.username, i.token):
+            range = [i.min, i.max]
+            Access_Create(i.name, i.pin, i.type, range) 
+            logging.info(str(i.type)+" '" + i.name + "' at pin (" + i.pin + ")")
+        else: return ''
 
 class delete:
     def POST(self):
-        i = web.input(name=None)
-        item = Access_Storage(i.name) 
-        item.output(0)
-        Access_Delete(i.name)
-        logging.info("Deleted pin (" + i.name + ")")
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None)
+        if users.validToken(i.username, i.token):
+            item = Access_Storage(i.name) 
+            item.output(0)
+            Access_Delete(i.name)
+            logging.info("Deleted pin (" + i.name + ")")
+        else: return ''
 
 class rotate:
     def POST(self):
-        i = web.input(name=None, angle=None)
-        servo = Access_Storage(i.name)
-        servo.rotate(int(i.angle))
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None, angle=None)
+        if users.validToken(i.username, i.token):
+            servo = Access_Storage(i.name)
+            servo.rotate(int(i.angle))
+        else: return ''
 
 class load:
     def GET(self):
-        Access_Load()
-        logging.info("Pin configuration loaded.")
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None)
+        if users.validToken(i.username, i.token):
+            Access_Load()
+            logging.info("Pin configuration loaded.")
+        else: return ''
 
 class switch:
     def GET(self):
-        i = web.input(name=None)
-        io = Access_Storage(i.name)
-        if(io.state == 0):
-            io.output(1)
-            logging.info(i.name + " switched ON")
-        elif(io.state == 1):
-            io.output(0)
-            logging.info(i.name + " switched OFF") 
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None)
+        if users.validToken(i.username, i.token):
+            io = Access_Storage(i.name)
+            if(io.state == 0):
+                io.output(1)
+                logging.info(i.name + " switched ON")
+            elif(io.state == 1):
+                io.output(0)
+                logging.info(i.name + " switched OFF")
+        else: return ''
 
 class save:
     def GET(self):
-        Access_Save()
-        logging.info("Pin configuration saved.")
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None)
+        if users.validToken(i.username, i.token):
+            Access_Save()
+            logging.info("Pin configuration saved.")
+        else: return ''
 
 class log:
     def GET(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
-        i = web.input(tail=None, maxlines=None)
-        log = Access_Log(i.tail, int(i.maxlines))
-        return log
+        i = web.input(username=None, token=None)
+        if users.validToken(i.username, i.token):
+            i = web.input(tail=None, maxlines=None)
+            log = Access_Log(i.tail, int(i.maxlines))
+            return log
+        else: return ''
 
 class json:
     def GET(self):
         web.header('Content-Type','application/json; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
-        json = '['
-        for pin, val in gStorage.items():
-            json+=str(val)+','
-        if len(gStorage) > 0:
-            json = json[:-1]
-        json += ']'
-        return json
+        i = web.input(username=None, token=None)
+        if users.validToken(i.username, i.token):
+            json = '['
+            for pin, val in gStorage.items():
+                json+=str(val)+','
+            if len(gStorage) > 0:
+                json = json[:-1]
+            json += ']'
+            return json
+        else: return ''
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

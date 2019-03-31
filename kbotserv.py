@@ -50,6 +50,7 @@ def Access_Load():
     loadPinConfig()
 
 def Access_Move(leftFore, leftAft, rightFore, rightAft):
+    return
     '''kit.motor1.throttle = clamp(leftFore)  #Left Fore
     kit.motor2.throttle = clamp(leftAft)   #Left Aft
     kit.motor3.throttle = clamp(rightFore) #Right Fore

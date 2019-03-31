@@ -8,6 +8,7 @@ class pin:
         self.state = 1
         self.range = range
         if (type == "GPIO"):
+            continue
             #GPIO.setup(self.pin_id, GPIO.OUT)
             #GPIO.output(self.pin_id, GPIO.HIGH)
         elif (type == "SERVO"):
@@ -44,6 +45,7 @@ class pin:
         
     def stop():
         if(self.type == "PWM"):
+             continue
  #           PWM.stop(self.pin_id)
         elif(self.type == "GPIO"):
             return

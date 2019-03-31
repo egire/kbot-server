@@ -29,6 +29,7 @@ def clamp(value=0, min=-1.0, max=1.0):
     return value
 
 def Access_Create(pin_name, pin_id, type, range):
+    return
     #gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
 
 def Access_Name(pin_name):

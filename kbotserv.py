@@ -1,6 +1,6 @@
 import web, json, csv, time, logging
 import pin, users
-from adafruit_motorkit import MotorKit
+#from adafruit_motorkit import MotorKit
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
         
@@ -29,7 +29,7 @@ def clamp(value=0, min=-1.0, max=1.0):
     return value
 
 def Access_Create(pin_name, pin_id, type, range):
-    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
+    #gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
 
 def Access_Name(pin_name):
     return gStorage[pin_name].name
@@ -50,11 +50,11 @@ def Access_Load():
     loadPinConfig()
 
 def Access_Move(leftFore, leftAft, rightFore, rightAft):
-    kit.motor1.throttle = clamp(leftFore)  #Left Fore
+    '''kit.motor1.throttle = clamp(leftFore)  #Left Fore
     kit.motor2.throttle = clamp(leftAft)   #Left Aft
     kit.motor3.throttle = clamp(rightFore) #Right Fore
     kit.motor4.throttle = clamp(rightAft)  #Right Aft
-    
+   '''
 def Access_Log(tail=True, maxlines=10):
     log = []
     data = ""

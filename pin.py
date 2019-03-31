@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 
 class pin:
     def __init__(self, name, pin_id, type="GPIO", range=[0,1]):
@@ -8,21 +8,21 @@ class pin:
         self.state = 1
         self.range = range
         if (type == "GPIO"):
-            GPIO.setup(self.pin_id, GPIO.OUT)
-            GPIO.output(self.pin_id, GPIO.HIGH)
+            #GPIO.setup(self.pin_id, GPIO.OUT)
+            #GPIO.output(self.pin_id, GPIO.HIGH)
         elif (type == "SERVO"):
             duty_min = 3
-            PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
+            #PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             self.rotate(90)
 
     def output(self, state):
         if(self.type == "GPIO"):
             if(state == 1): # HIGH
                 self.state = 1
-                GPIO.output(self.pin_id, GPIO.HIGH)
+                #GPIO.output(self.pin_id, GPIO.HIGH)
             elif(state == 0): # LOW
                 self.state = 0
-                GPIO.output(self.pin_id, GPIO.LOW)
+                #GPIO.output(self.pin_id, GPIO.LOW)
 
     def rotate(self, angle):
         if(self.type != "SERVO"):
@@ -39,12 +39,12 @@ class pin:
         duty_span = duty_max - duty_min
         angle_f = float(angle)
         duty = 100 - ((angle_f / 180) * duty_span + duty_min) 
-        PWM.set_duty_cycle(self.pin_id, duty)
+        #PWM.set_duty_cycle(self.pin_id, duty)
         self.state = angle_f
         
     def stop():
         if(self.type == "PWM"):
-            PWM.stop(self.pin_id)
+ #           PWM.stop(self.pin_id)
         elif(self.type == "GPIO"):
             return
         

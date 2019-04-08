@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 from adafruit_servokit import ServoKit
 
 class pin:
@@ -11,9 +12,8 @@ class pin:
         self.servokit = None
         self.channels = 16
         if (type == "GPIO"):
-            test = 1
-            GPIO.setup(self.pin_id, GPIO.OUT)
-            GPIO.output(self.pin_id, GPIO.HIGH)
+            GPIO.setup(int(self.pin_id), GPIO.OUT)
+            GPIO.output(int(self.pin_id), GPIO.HIGH)
         elif (type == "PWM"):
             duty_min = 3
             PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
@@ -30,6 +30,10 @@ class pin:
             elif(state == 0): # LOW
                 self.state = 0
                 GPIO.output(self.pin_id, GPIO.LOW)
+
+    def input(self):
+        if(self.type == "GPIO"):
+            return self.ping()
 
     def rotate(self, angle):
         # clamp angle to range
@@ -48,7 +52,25 @@ class pin:
             self.state = angle_f
         elif(self.type == "I2C"): 
             self.servokit.servo[int(self.pin_id)].angle = angle
-        
+    
+    def ping(self):
+        if(self.type == "GPIO"):
+            GPIO.setup(int(self.pin_id), GPIO.OUT)  
+            GPIO.output(int(self.pin_id), 0)  
+            time.sleep(0.000002)  
+            GPIO.output(int(self.pin_id), 1)  
+            time.sleep(0.000001)  
+            GPIO.output(int(self.pin_id), 0)  
+            GPIO.setup(int(self.pin_id), GPIO.IN)  
+            while GPIO.input(int(self.pin_id))==0:  
+               starttime=time.time()  
+            while GPIO.input(int(self.pin_id))==1:  
+               endtime=time.time()  
+            duration=endtime-starttime  
+            # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s   
+            distance=duration*34000/2  
+            return distance  
+    
     def stop():
         if(self.type == "PWM"):
             PWM.stop(self.pin_id)

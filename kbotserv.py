@@ -55,7 +55,10 @@ def Access_Move(leftFore, leftAft, rightFore, rightAft):
     kit.motor2.throttle = clamp(leftAft)   #Left Aft
     kit.motor3.throttle = clamp(rightFore) #Right Fore
     kit.motor4.throttle = clamp(rightAft)  #Right Aft
-    
+
+def Access_Sensor(name):
+    return gStorage[name].input()
+
 def Access_Log(tail=True, maxlines=10):
     log = []
     data = ""
@@ -80,7 +83,8 @@ urls = (
     '/login', 'login',
     '/add_user', 'add_user',
     '/move', 'move',
-    '/login', 'login'
+    '/login', 'login',
+    '/sensor', 'sensor'
 )
 
 #webpages
@@ -134,11 +138,18 @@ class rotate:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None, angle=None)
-        logging.info("Rotate")
         if users.validToken(i.username, i.token):
             servo = Access_Storage(i.name)
             servo.rotate(int(i.angle))
-            logging.info("Rotate")
+        else: return ''
+
+class sensor:
+    def POST(self):
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None)
+        if users.validToken(i.username, i.token):
+            return Access_Sensor(i.name)
         else: return ''
 
 class load:

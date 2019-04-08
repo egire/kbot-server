@@ -29,6 +29,7 @@ def clamp(value=0, min=-1.0, max=1.0):
     return value
 
 def Access_Create(pin_name, pin_id, type, range):
+    logging.info("Adding Pin ("+ pin_id+")" )
     gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
 
 def Access_Name(pin_name):
@@ -133,13 +134,15 @@ class rotate:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None, angle=None)
+        logging.info("Rotate")
         if users.validToken(i.username, i.token):
             servo = Access_Storage(i.name)
             servo.rotate(int(i.angle))
+            logging.info("Rotate")
         else: return ''
 
 class load:
-    def GET(self):
+    def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
@@ -149,7 +152,7 @@ class load:
         else: return ''
 
 class switch:
-    def GET(self):
+    def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
@@ -164,7 +167,7 @@ class switch:
         else: return ''
 
 class save:
-    def GET(self):
+    def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
@@ -174,7 +177,7 @@ class save:
         else: return ''
 
 class log:
-    def GET(self):
+    def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
@@ -185,7 +188,7 @@ class log:
         else: return ''
 
 class json:
-    def GET(self):
+    def POST(self):
         web.header('Content-Type','application/json; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)

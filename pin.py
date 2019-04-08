@@ -19,8 +19,8 @@ class pin:
             PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             self.rotate(90)
         elif (type == "I2C"):
-            servokit = ServoKit(channel=self.channels)
-            kit.servo[pin_id].set_pulse_width_range(range[0], range[1])
+            self.servokit = ServoKit(channels=self.channels)
+            self.servokit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
 
     def output(self, state):
         if(self.type == "GPIO"):
@@ -46,8 +46,8 @@ class pin:
             duty = 100 - ((angle_f / 180) * duty_span + duty_min) 
             PWM.set_duty_cycle(self.pin_id, duty)
             self.state = angle_f
-        elif(self.type == "IC2"): 
-            kit.servo[self.pid_id].angle = angle
+        elif(self.type == "I2C"): 
+            self.servokit.servo[int(self.pin_id)].angle = angle
         
     def stop():
         if(self.type == "PWM"):

@@ -20,7 +20,7 @@ def loadPinConfig():
     with open(gPinConfig, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            range = [int(row['range_min']), int(row['range_max'])]
+            range = [row['range_min'], row['range_max']]
             Access_Create(row['name'], row['pin'], row['type'], range)
 
 def clamp(value=0, min=-1.0, max=1.0):
@@ -149,7 +149,8 @@ class sensor:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
         if users.validToken(i.username, i.token):
-            return Access_Sensor(i.name)
+            json = '{"t": ' + str(Access_Sensor(i.name)[0]) + ', "y": ' + str(Access_Sensor(i.name)[1]) + '}'
+            return json
         else: return ''
 
 class load:

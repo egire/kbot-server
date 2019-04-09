@@ -33,7 +33,7 @@ class pin:
 
     def input(self):
         if(self.type == "GPIO"):
-            return self.ping()
+            return self.ping(10)
 
     def rotate(self, angle):
         # clamp angle to range
@@ -53,7 +53,7 @@ class pin:
         elif(self.type == "I2C"): 
             self.servokit.servo[int(self.pin_id)].angle = angle
     
-    def ping(self):
+    def ping(self, samples):
         if(self.type == "GPIO"):
             GPIO.setup(int(self.pin_id), GPIO.OUT)  
             GPIO.output(int(self.pin_id), 0)  
@@ -63,13 +63,13 @@ class pin:
             GPIO.output(int(self.pin_id), 0)  
             GPIO.setup(int(self.pin_id), GPIO.IN)  
             while GPIO.input(int(self.pin_id))==0:  
-               starttime=time.time()  
+               starttime=time.time() 
             while GPIO.input(int(self.pin_id))==1:  
-               endtime=time.time()  
+               endtime=time.time()
             duration=endtime-starttime  
             # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s   
-            distance=duration*34000/2  
-            return distance  
+            distance=duration*34000/2
+            return starttime, distance
     
     def stop():
         if(self.type == "PWM"):

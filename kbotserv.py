@@ -1,12 +1,10 @@
 import web, json, csv, time, logging
 import pin, users
-from adafruit_motorkit import MotorKit
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
         
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file 
-kit = MotorKit() # running motors
     
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -20,17 +18,13 @@ def loadPinConfig():
     with open(gPinConfig, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            range = [row['range_min'], row['range_max']]
-            Access_Create(row['name'], row['pin'], row['type'], range)
+            out_range = [float(row['out_min']), float(row['out_max'])]
+            in_range = [float(row['in_min']), float(row['in_max'])]
+            Access_Create(row['name'], row['pin'], row['type'], out_range, in_range)
 
-def clamp(value=0, min=-1.0, max=1.0):
-    if value < min: value = min
-    if value > max: value = max
-    return value
-
-def Access_Create(pin_name, pin_id, type, range):
+def Access_Create(pin_name, pin_id, type, out_range, in_range):
     logging.info("Adding Pin ("+ pin_id+")" )
-    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, range)
+    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, out_range, in_range)
 
 def Access_Name(pin_name):
     return gStorage[pin_name].name
@@ -50,11 +44,8 @@ def Access_Save():
 def Access_Load():
     loadPinConfig()
 
-def Access_Move(leftFore, leftAft, rightFore, rightAft):
-    kit.motor1.throttle = clamp(leftFore)  #Left Fore
-    kit.motor2.throttle = clamp(leftAft)   #Left Aft
-    kit.motor3.throttle = clamp(rightFore) #Right Fore
-    kit.motor4.throttle = clamp(rightAft)  #Right Aft
+def Access_Move(pin_name, leftFore, rightFore, leftAft, rightAft):
+    gStorage[pin_name].move(leftFore, rightFore, leftAft, rightAft)
 
 def Access_Sensor(name):
     return gStorage[name].input()

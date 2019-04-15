@@ -50,6 +50,14 @@ def Access_Move(pin_name, leftFore, rightFore, leftAft, rightAft):
 def Access_Sensor(name):
     return gStorage[name].input()
 
+def Access_Sweep(name):
+    minmax = Access_Sensor(name).out_range
+    json = ''
+    for(int i=minmax[0]; i<=minmax[1]; i++):
+	    servo = Access_Storage('PAN')
+	    servo.rotate(i)
+	    json += Access_Sensor(name).input()
+
 def Access_Log(tail=True, maxlines=10):
     log = []
     data = ""
@@ -75,7 +83,8 @@ urls = (
     '/add_user', 'add_user',
     '/move', 'move',
     '/login', 'login',
-    '/sensor', 'sensor'
+    '/sensor', 'sensor',
+    '/sweep', 'sweep'
 )
 
 #webpages
@@ -141,6 +150,16 @@ class sensor:
         i = web.input(username=None, token=None, name=None)
         if users.validToken(i.username, i.token):
             json = '{"t": ' + str(Access_Sensor(i.name)[0]) + ', "y": ' + str(Access_Sensor(i.name)[1]) + '}'
+            return json
+        else: return ''
+
+class sweep:
+    def POST(self):
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None)
+        if users.validToken(i.username, i.token):
+            json = Access_Sweep(i.name)
             return json
         else: return ''
 

@@ -1,7 +1,8 @@
-import RPi.GPIO as GPIO
+'''import RPi.GPIO as GPIO
 import time
 from adafruit_servokit import ServoKit
 from adafruit_motorkit import MotorKit
+'''
 
 class pin:
     def __init__(self, name="pin1", pin_id=1, type="GPIO", out_range=[0,1], in_range=[0,1]):
@@ -14,27 +15,30 @@ class pin:
         self.kit = None
         self.channels = 16
         if (type == "GPIO"):
-            GPIO.setup(int(self.pin_id), GPIO.OUT)
-            GPIO.output(int(self.pin_id), GPIO.HIGH)
+	    print ''
+            #GPIO.setup(int(self.pin_id), GPIO.OUT)
+            #GPIO.output(int(self.pin_id), GPIO.HIGH)
         elif (type == "PWM"):
             duty_min = 3
-            PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
-            self.rotate(90)
+            #PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
+            #self.rotate(90)
         elif (type == "I2C"):
-            self.kit = ServoKit(channels=self.channels)
-            self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
+	    print ''
+            #self.kit = ServoKit(channels=self.channels)
+            #self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
         elif (type == "MOTOR"):
-            self.kit = MotorKit()
+	    print ''
+            #self.kit = MotorKit()
           
                  
     def output(self, state):
         if(self.type == "GPIO"):
             if(state == 1): # HIGH
                 self.state = 1
-                GPIO.output(self.pin_id, GPIO.HIGH)
+                #GPIO.output(self.pin_id, GPIO.HIGH)
             elif(state == 0): # LOW
                 self.state = 0
-                GPIO.output(self.pin_id, GPIO.LOW)
+                #GPIO.output(self.pin_id, GPIO.LOW)
 
                  
     def input(self):
@@ -55,15 +59,16 @@ class pin:
             duty_span = duty_max - duty_min
             angle_f = float(angle)
             duty = 100 - ((angle_f / 180) * duty_span + duty_min) 
-            PWM.set_duty_cycle(self.pin_id, duty)
+            #PWM.set_duty_cycle(self.pin_id, duty)
             self.state = angle_f
-        elif(self.type == "I2C"): 
-            self.kit.servo[int(self.pin_id)].angle = angle
+        elif(self.type == "I2C"):
+            print '' 
+            #self.kit.servo[int(self.pin_id)].angle = angle
     
                  
     def ping(self):
         if(self.type == "GPIO"):
-            GPIO.setup(int(self.pin_id), GPIO.OUT)  
+            '''GPIO.setup(int(self.pin_id), GPIO.OUT)  
             GPIO.output(int(self.pin_id), 0)  
             time.sleep(0.000002)  
             GPIO.output(int(self.pin_id), 1)  
@@ -80,22 +85,25 @@ class pin:
             if (distance < self.in_range[0] or distance > self.in_range[1]):
                 time.sleep(0.000002)
                 self.ping()
-            return starttime, distance
-    
+            return starttime, distance'''
+	return ''
                  
     def move(self, leftFore, rightFore, leftAft, rightAft):
         if(self.type == "I2C"): 
+	    print ''
+	    '''
             self.kit.motor1.throttle = self.clamp(leftFore)  #Left Fore
             self.kit.motor3.throttle = self.clamp(rightFore) #Right Fore
             self.kit.motor2.throttle = self.clamp(leftAft)   #Left Aft
-            self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft
+            self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft'''
     
                  
     def stop():
         if(self.type == "PWM"):
-            PWM.stop(self.pin_id)
+	    print ''
+            #PWM.stop(self.pin_id)
         elif(self.type == "GPIO"):
-            return
+            return ''
              
             
     def clamp(self, value=0.0, min=-1.0, max=1.0):

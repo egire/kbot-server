@@ -53,7 +53,7 @@ def Access_Sensor(name):
 def Access_Sweep(name):
     minmax = Access_Sensor(name).out_range
     json = ''
-    for(int i=minmax[0]; i<=minmax[1]; i++):
+    for i in range(minmax[0], minmax[1]):
 	    servo = Access_Storage('PAN')
 	    servo.rotate(i)
 	    json += Access_Sensor(name).input()

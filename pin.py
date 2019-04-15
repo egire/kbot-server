@@ -15,7 +15,7 @@ class pin:
         self.kit = None
         self.channels = 16
         if (type == "GPIO"):
-	    print('')
+            print('')
             #GPIO.setup(int(self.pin_id), GPIO.OUT)
             #GPIO.output(int(self.pin_id), GPIO.HIGH)
         elif (type == "PWM"):
@@ -23,11 +23,11 @@ class pin:
             #PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             #self.rotate(90)
         elif (type == "I2C"):
-	    print('')
+            print('')
             #self.kit = ServoKit(channels=self.channels)
             #self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
         elif (type == "MOTOR"):
-	    print('')
+            print('')
             #self.kit = MotorKit()
           
                  
@@ -86,11 +86,11 @@ class pin:
                 time.sleep(0.000002)
                 self.ping()
             return starttime, distance'''
-	return ''
+         return ''
                  
     def move(self, leftFore, rightFore, leftAft, rightAft):
         if(self.type == "I2C"): 
-	    print ''
+	    print('')
 	    '''
             self.kit.motor1.throttle = self.clamp(leftFore)  #Left Fore
             self.kit.motor3.throttle = self.clamp(rightFore) #Right Fore
@@ -100,10 +100,10 @@ class pin:
                  
     def stop():
         if(self.type == "PWM"):
-	    print('')
+            print('')
             #PWM.stop(self.pin_id)
         elif(self.type == "GPIO"):
-            return('')
+            return ''
              
             
     def clamp(self, value=0.0, min=-1.0, max=1.0):

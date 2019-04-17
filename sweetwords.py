@@ -1,4 +1,4 @@
-import hashlib, uuid, datetime, csv, os, base64
+import csv, os
 
 schema = ['sweetword', 'valid']
     

@@ -2,17 +2,19 @@ import RPi.GPIO as GPIO
 import time
 from adafruit_servokit import ServoKit
 from adafruit_motorkit import MotorKit
+from asyncio import Lock
 
 class pin:
     def __init__(self, name="pin1", pin_id=1, type="GPIO", out_range=[0,1], in_range=[0,1]):
         self.name = name
         self.type = type
-        self.pin_id = pin_id
+        self.pin_id = int(pin_id)
         self.state = 1
         self.out_range = out_range
         self.in_range = in_range
         self.kit = None
         self.channels = 16
+        self.lock = Lock()
         if (type == "GPIO"):
             GPIO.setup(int(self.pin_id), GPIO.OUT)
             GPIO.output(int(self.pin_id), GPIO.HIGH)
@@ -44,10 +46,10 @@ class pin:
                  
     def rotate(self, angle):
         # clamp angle to range
-        if (angle < float(self.range[0])):
-            angle = float(self.range[0])
-        if (angle > float(self.range[1])):
-            angle = float(self.range[1])
+        if (angle < float(self.out_range[0])):
+            angle = float(self.out_range[0])
+        if (angle > float(self.out_range[1])):
+            angle = float(self.out_range[1])
             
         if(self.type == "PWM"):            
             duty_min = 3
@@ -63,25 +65,31 @@ class pin:
                  
     def ping(self):
         if(self.type == "GPIO"):
-            GPIO.setup(int(self.pin_id), GPIO.OUT)  
-            GPIO.output(int(self.pin_id), 0)  
-            time.sleep(0.000002)  
-            GPIO.output(int(self.pin_id), 1)  
-            time.sleep(0.000001)  
-            GPIO.output(int(self.pin_id), 0)  
-            GPIO.setup(int(self.pin_id), GPIO.IN)  
-            while GPIO.input(int(self.pin_id))==0:  
-               starttime=time.time()  
-            while GPIO.input(int(self.pin_id))==1:  
-               endtime=time.time()  
-            duration=endtime-starttime  
-            # Distance is defined as time/2 (there and back) * speed of sound 343 m/s   
-            distance = duration*343.0/2.0
-            if (distance < self.in_range[0] or distance > self.in_range[1]):
+            yield from self.lock
+            try:
+                attempt = 0
+                starttime = None
+                distance = -1
+                GPIO.setup(self.pin_id, GPIO.OUT)
+                GPIO.output(self.pin_id, 0)
                 time.sleep(0.000002)
-                self.ping()
-            return starttime, distance
-    
+                GPIO.output(self.pin_id, 1)
+                time.sleep(0.000001)
+                GPIO.output(self.pin_id, 0)
+                GPIO.setup(self.pin_id, GPIO.IN)
+                while GPIO.input(self.pin_id)==0:
+                   starttime=time.time()
+                while GPIO.input(self.pin_id)==1:
+                   endtime=time.time()
+                duration=endtime-starttime
+                # Distance is defined as time/2 (there and back) * speed of sound 343 m/s   
+                distance = duration*343.0/2.0
+                time.sleep(0.000002)
+                attempt += 1
+            finally:
+                self.lock.release()
+                return starttime, distance
+
                  
     def move(self, leftFore, rightFore, leftAft, rightAft):
         if(self.type == "I2C"): 
@@ -91,7 +99,7 @@ class pin:
             self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft
     
                  
-    def stop():
+    def stop(self):
         if(self.type == "PWM"):
             PWM.stop(self.pin_id)
         elif(self.type == "GPIO"):

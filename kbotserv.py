@@ -50,6 +50,9 @@ def Access_Move(pin_name, leftFore, rightFore, leftAft, rightAft):
 def Access_Sensor(name):
     return gStorage[name].input()
 
+def Access_Autonomous():
+    return ''
+
 def Access_Log(tail=True, maxlines=10):
     log = []
     data = ""
@@ -75,7 +78,8 @@ urls = (
     '/add_user', 'add_user',
     '/move', 'move',
     '/login', 'login',
-    '/sensor', 'sensor'
+    '/sensor', 'sensor',
+    '/autonomous', 'autonomous'
 )
 
 #webpages
@@ -169,6 +173,16 @@ class switch:
                 logging.info(i.name + " switched OFF")
         else: return ''
 
+class autonomous:
+    def POST(self):
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None)
+        if users.validToken(i.username, i.token):
+            Access_Autonomous()
+            logging.info("Autonomous Mode active.")
+        else: return ''
+        
 class save:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')

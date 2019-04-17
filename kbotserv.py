@@ -44,8 +44,8 @@ def Access_Save():
 def Access_Load():
     loadPinConfig()
 
-def Access_Move(pin_name, leftFore, rightFore, leftAft, rightAft):
-    gStorage[pin_name].move(leftFore, rightFore, leftAft, rightAft)
+def Access_Move(leftFore, rightFore, leftAft, rightAft):
+    gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
 
 def Access_Sensor(name):
     return gStorage[name].input()
@@ -102,7 +102,7 @@ class move:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, leftFore=None, leftAft=None, rightFore=None, rightAft=None)
         if users.validToken(i.username, i.token):
-            Access_Move(float(i.leftFore), float(i.leftAft), float(i.rightFore), float(i.rightAft))
+            Access_Move(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
         else: return ''
         
 class add:

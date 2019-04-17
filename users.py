@@ -11,6 +11,13 @@ def login(username, password):
     else:
         return False
 
+def register(username, password, email):
+    if (exists(username)):
+        return False
+    else:
+        addUser(username, password, email)
+        return True
+
 
 def validLogin(username, password):
     user = getUser(username)
@@ -20,7 +27,7 @@ def validLogin(username, password):
         return True
     else:
         return False
- 
+    
 
 def validToken(username, token):
     validToken = getToken(username)
@@ -30,6 +37,14 @@ def validToken(username, token):
 
 def addUser(username, password, email):
     return create(username, password, email)
+
+
+def exists(username):
+    user = getUser(username)
+    if (user):
+        return True
+    else:
+        return False
 
 
 def hash(password, salt=b''):
@@ -59,8 +74,10 @@ def getToken(username):
 
 def getUser(username):
     user = read(username)
-    return user
-
+    if (user):
+        return user
+    else:
+        return None
 
 def create(username, password, email):
     global schema
@@ -90,6 +107,7 @@ def read(username, field=""):
                     return row[field]
                 else:
                     return row
+        return None
 
 
 def update(username, field="", value=None):

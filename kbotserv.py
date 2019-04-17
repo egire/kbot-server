@@ -78,6 +78,7 @@ urls = (
     '/add_user', 'add_user',
     '/move', 'move',
     '/login', 'login',
+    '/register', 'register',
     '/sensor', 'sensor',
     '/autonomous', 'autonomous'
 )
@@ -95,6 +96,17 @@ class login:
         user = users.login(i.username, i.password)
         if user: return user
         else: return ''
+        
+class register:
+    def POST(self):
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, email=None, password=None)
+        success = users.register(i.username, i.password, i.email)
+        if (success):
+            return 'User registered!'
+        else:
+            return 'User with this login exists.'
 
 class move:
     def POST(self):
@@ -103,6 +115,7 @@ class move:
         i = web.input(username=None, token=None, leftFore=None, leftAft=None, rightFore=None, rightAft=None)
         if users.validToken(i.username, i.token):
             Access_Move(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
+            print(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
         else: return ''
         
 class add:
@@ -177,7 +190,7 @@ class autonomous:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
-        i = web.input(username=None, token=None)
+        i = web.input(username=None, token=None);
         if users.validToken(i.username, i.token):
             Access_Autonomous()
             logging.info("Autonomous Mode active.")

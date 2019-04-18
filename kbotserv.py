@@ -8,11 +8,11 @@ gPinConfig = "pins.cfg" # pin config file
     
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
-        fieldnames = ['name', 'pin', 'type', 'state', 'range_min', 'range_max']
+        fieldnames = ['name', 'pin', 'type', 'mode', 'state', 'range_min', 'range_max']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for pin in gStorage.items():
-            writer.writerow({'name':pin[0],'pin':pin[1].pin_id,'state':pin[1].state})
+            writer.writerow({'name':pin['name'],'pin':pin['pin'].pin_id,'state':pin['state'].state, 'mode':pin['mode']})
 
 def loadPinConfig():
     with open(gPinConfig, newline='') as csvfile:
@@ -20,11 +20,11 @@ def loadPinConfig():
         for row in reader:
             out_range = [float(row['out_min']), float(row['out_max'])]
             in_range = [float(row['in_min']), float(row['in_max'])]
-            Access_Create(row['name'], row['pin'], row['type'], out_range, in_range)
+            Access_Create(row['name'], row['pin'], row['type'], row['state'], row['mode'], out_range, in_range)
 
-def Access_Create(pin_name, pin_id, type, out_range, in_range):
+def Access_Create(pin_name, pin_id, type, state, mode, out_range, in_range):
     logging.info("Adding Pin ("+ pin_id+")" )
-    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, out_range, in_range)
+    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
 
 def Access_Name(pin_name):
     return gStorage[pin_name].name
@@ -48,7 +48,7 @@ def Access_Move(leftFore, rightFore, leftAft, rightAft):
     gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
 
 def Access_Sensor(name):
-    return gStorage[name].input()
+    return gStorage[name]
 
 def Access_Autonomous():
     return ''
@@ -74,8 +74,6 @@ urls = (
     '/rotate', 'rotate',
     '/log', 'log',
     '/load', 'load',
-    '/login', 'login',
-    '/add_user', 'add_user',
     '/move', 'move',
     '/login', 'login',
     '/register', 'register',
@@ -84,9 +82,6 @@ urls = (
 )
 
 #webpages
-class add_user:
-    def POST(self):
-        return
         
 class login:
     def POST(self):
@@ -157,7 +152,8 @@ class sensor:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
         if users.validToken(i.username, i.token):
-            json = '{"t": ' + str(Access_Sensor(i.name)[0]) + ', "y": ' + str(Access_Sensor(i.name)[1]) + '}'
+            input = Access_Sensor(i.name).input()
+            json = '{"t": ' + str(input[0]) + ', "y": ' + str(input[1]) + '}'
             return json
         else: return ''
 

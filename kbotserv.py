@@ -143,7 +143,7 @@ class rotate:
         i = web.input(username=None, token=None, name=None, angle=None)
         if users.validToken(i.username, i.token):
             servo = Access_Storage(i.name)
-            servo.rotate(int(i.angle))
+            servo.rotate(float(i.angle))
         else: return ''
 
 class sensor:

@@ -5,7 +5,8 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
         
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file 
-    
+gSweep = False
+
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
         fieldnames = ['name', 'pin', 'type', 'mode', 'state', 'range_min', 'range_max']
@@ -48,7 +49,17 @@ def Access_Move(leftFore, rightFore, leftAft, rightAft):
     gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
 
 def Access_Sensor(name):
-    return gStorage[name]
+    return (Access_Storage(name)).sensor
+
+def Access_Sweep(state):
+    ping = Access_Sensor('PING')
+    head = Access_Sensor('HEAD')
+    
+    if(state):
+        head.on()
+    else:
+        head.off()
+    return ''
 
 def Access_Autonomous():
     return ''
@@ -78,7 +89,8 @@ urls = (
     '/login', 'login',
     '/register', 'register',
     '/sensor', 'sensor',
-    '/autonomous', 'autonomous'
+    '/autonomous', 'autonomous',
+    '/sweep', 'sweep'
 )
 
 #webpages
@@ -117,10 +129,11 @@ class add:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
-        i = web.input(username=None, token=None, name=None, pin=None, type=None, min=None, max=None)
+        i = web.input(username=None, token=None, name=None, pin=None, type=None, state=None, mode=None, omin=None, omax=None, imin=None, imax=None)
         if users.validToken(i.username, i.token):
-            range = [i.min, i.max]
-            Access_Create(i.name, i.pin, i.type, range) 
+            orange = [i.omin, i.omax]
+            irange = [i.imin, i.imax]
+            Access_Create(i.name, i.pin, i.type, i.state, i.mode, orange, irange) 
             logging.info(str(i.type)+" '" + i.name + "' at pin (" + i.pin + ")")
         else: return ''
 
@@ -152,8 +165,11 @@ class sensor:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
         if users.validToken(i.username, i.token):
-            input = Access_Sensor(i.name).input()
-            json = '{"t": ' + str(input[0]) + ', "y": ' + str(input[1]) + '}'
+            sens = Access_Sensor(i.name)
+            if not sens.state: sens.on()
+            inp = sens.input()
+            json = '{"x": ' + str(inp[0]) + ', "y": ' + str(inp[1]) + '}'
+            sens.off()
             return json
         else: return ''
 
@@ -165,6 +181,21 @@ class load:
         if users.validToken(i.username, i.token):
             Access_Load()
             logging.info("Pin configuration loaded.")
+        else: return ''
+        
+class sweep:
+    def POST(self):
+        global gSweep
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None)
+        if users.validToken(i.username, i.token):
+            if not gSweep:
+                Access_Sweep(True)
+                gSweep = True
+            else:
+                Access_Sweep(False)
+                gSweep = False
         else: return ''
 
 class switch:
@@ -229,6 +260,7 @@ class json:
         else: return ''
 
 if __name__ == "__main__":
+    loadPinConfig()
     app = web.application(urls, globals())
     app.run()
     

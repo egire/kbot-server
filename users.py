@@ -1,8 +1,16 @@
-import hashlib, uuid, datetime, csv, os, base64
+import hashlib, uuid, datetime, csv, os, base64, random
+import honeychecker
 
-schema = ['username', 'password', 'email', 'salt', 'token']
+schema = ['username', 'email', 'salt', 'token']
+
+sweetcount = 6
+for count in range(sweetcount):
+    schema.append('password'+str(count))
 
 def login(username, password):
+    if not exists(username):
+        return False
+        
     if(validLogin(username, password)):
         user = getUser(username)
         setToken(username)
@@ -18,16 +26,31 @@ def register(username, password, email):
         addUser(username, password, email)
         return True
 
-
 def validLogin(username, password):
     user = getUser(username)
-    hashpw = hash(password, bytes(user["salt"], 'utf-8'))
+    salt = user["salt"]
+    hashpw = hash(password, bytes(salt, 'utf-8'))
+    index = honeychecker.getSweetword(salt)
     
-    if user["username"] == username and bytes(user["password"], 'utf-8') == hashpw[1]:
-        return True
-    else:
+    # Not in honeychecker (bad salt, not added to honeychecker?)
+    if not honeychecker.validSweetword(salt):
         return False
     
+    # Password from honeychecker database is correct (good actor login)
+    if bytes(user["password"+str(index)], 'utf-8') == hashpw[1]:
+        return True
+    
+    # Password is honeyword (bad actor login)
+    honeywords = list(range(sweetcount))
+    print(honeywords)
+    print(index)
+    honeywords.remove(int(index))
+    for h in honeywords:
+        if bytes(user["password"+str(h)], 'utf-8') == hashpw[1]:
+            honeychecker.notifyHoneyword()
+            return True
+    # Bad login
+    return False
 
 def validToken(username, token):
     validToken = getToken(username)
@@ -47,10 +70,15 @@ def exists(username):
         return False
 
 
-def hash(password, salt=b''):
+def salt():
+    return base64.b64encode(os.urandom(128))
+
+def hash(password, s):
     if not salt:
-        salt = base64.b64encode(os.urandom(128))
-    hashpw = base64.b64encode(hashlib.sha512(salt+password.encode()).digest())
+        s = salt()
+    
+    hashpw = base64.b64encode(hashlib.sha256(s+password.encode()).digest())
+    
     return (salt, hashpw)
 
 def token():
@@ -89,10 +117,37 @@ def create(username, password, email):
     with open('users.db', 'a', newline='\n') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=schema)
         if not os.path.exists('./users.db'): writer.writeheader()
-        saltnhash = hash(password)
-        salt = saltnhash[0]
-        hashpw = saltnhash[1]
-        user = {'username': username, 'password': hashpw.decode(), 'email': email, 'salt': salt.decode(), 'token': 0}
+        
+        s = salt()
+        index = random.randint(0, sweetcount)
+        honeychecker.addSweetword(s.decode(), index)
+        user = {'username': username, 'email': email, 'token': 0}
+        user['salt'] = s.decode()
+        
+        for hashindex in range(0, sweetcount):
+            if hashindex == index:
+                user['password'+str(index)] = hash(password, s)[1].decode()
+                print(password)
+            else:
+                genFunc = random.randint(0, sweetcount-1)
+                genPass = ''
+                if (genFunc == 0):
+                    genPass = honeychecker.randomASCII(password, 0)
+                elif (genFunc == 1):
+                    genPass = honeychecker.randomPassword()
+                elif (genFunc == 2):
+                    genPass = honeychecker.randomPassword()
+                elif (genFunc == 3):
+                    randpass = honeychecker.randomPassword()
+                    genPass = honeychecker.remap(randpass)
+                elif (genFunc == 4):
+                    randpass = honeychecker.randomPassword()
+                    genPass = honeychecker.remap(randpass)
+                elif (genFunc == 5):
+                    genPass = honeychecker.remap(password)
+                print(genPass)
+                user['password'+str(hashindex)] = hash(genPass, s)[1].decode()
+        
         writer.writerow(user)
         return True
 
@@ -100,7 +155,7 @@ def create(username, password, email):
 def read(username, field=""):
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
-        reader = csv.DictReader(csvfile)
+        reader = csv.DictReader(csvfile, fieldnames=schema)
         for row in reader:
             if row['username'] == username:
                 if field:

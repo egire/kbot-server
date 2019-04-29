@@ -1,5 +1,7 @@
 import web, json, csv, time, logging
 import pin, users
+from cheroot.server import HTTPServer
+from cheroot.ssl.builtin import BuiltinSSLAdapter
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
         
@@ -24,7 +26,6 @@ def loadPinConfig():
             Access_Create(row['name'], row['pin'], row['type'], row['state'], row['mode'], out_range, in_range)
 
 def Access_Create(pin_name, pin_id, type, state, mode, out_range, in_range):
-    logging.info("Adding Pin ("+ pin_id+")" )
     gStorage[pin_name] = pin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
 
 def Access_Name(pin_name):
@@ -49,7 +50,8 @@ def Access_Move(leftFore, rightFore, leftAft, rightAft):
     gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
 
 def Access_Sensor(name):
-    return (Access_Storage(name)).sensor
+    sensor = (Access_Storage(name)).sensor
+    return sensor
 
 def Access_Sweep(state):
     ping = Access_Sensor('PING')
@@ -99,10 +101,16 @@ class login:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
+        ip = web.ctx['ip']
         i = web.input(username=None, password=None)
-        user = users.login(i.username, i.password)
-        if user: return user
-        else: return ''
+        user = users.login(i.username, i.password, ip)
+        if user:
+            Access_Load()
+            logging.info("Login: " + i.username + " (" + ip + ")")
+            return user
+        else:
+            logging.info("Bad Login: " + i.username + " (" + ip + ")")
+            return ''
         
 class register:
     def POST(self):
@@ -111,8 +119,10 @@ class register:
         i = web.input(username=None, email=None, password=None)
         success = users.register(i.username, i.password, i.email)
         if (success):
+            logging.info("User Registered: " + i.username + " (" + web.ctx['ip'] + ")")
             return 'User registered!'
         else:
+            logging.info("Bad Registration: " + i.username + " (" + web.ctx['ip'] + ")")
             return 'User with this login exists.'
 
 class move:
@@ -122,7 +132,6 @@ class move:
         i = web.input(username=None, token=None, leftFore=None, leftAft=None, rightFore=None, rightAft=None)
         if users.validToken(i.username, i.token):
             Access_Move(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
-            print(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
         else: return ''
         
 class add:
@@ -165,11 +174,21 @@ class sensor:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
         if users.validToken(i.username, i.token):
-            sens = Access_Sensor(i.name)
-            if not sens.state: sens.on()
-            inp = sens.input()
+            sensor = Access_Sensor(i.name)
+            
+            if users.badactor and not sensor.bad:
+                sensor.off()
+                sensor.reset()
+                sensor.bad = True
+                sensor.on()
+                
+            if not sensor.state: 
+                sensor.reset()
+                sensor.on()
+            inp = None
+            while not inp:
+                inp = sensor.input()
             json = '{"x": ' + str(inp[0]) + ', "y": ' + str(inp[1]) + '}'
-            sens.off()
             return json
         else: return ''
 
@@ -180,7 +199,6 @@ class load:
         i = web.input(username=None, token=None, name=None)
         if users.validToken(i.username, i.token):
             Access_Load()
-            logging.info("Pin configuration loaded.")
         else: return ''
         
 class sweep:
@@ -260,7 +278,9 @@ class json:
         else: return ''
 
 if __name__ == "__main__":
-    loadPinConfig()
     app = web.application(urls, globals())
+    HTTPServer.ssl_adapter = BuiltinSSLAdapter(
+    certificate='cert/fullchain.pem', 
+    private_key='cert/privkey.pem')
     app.run()
     

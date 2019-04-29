@@ -37,13 +37,14 @@ def randomASCII(word, pos=0):
 
 
 def randomPassword(file='pws.txt'):
-    pwds = []
+    pws = []
     
     f = open(file, 'r')
     for line in f:
-        pwds.append(line)
+        pws.append(line[:-1])
+    f.close()
     
-    word = pwds[random.randint(0, len(pwds)-1)]
+    word = pws[random.randint(0, len(pws)-1)]
     return word
 
 

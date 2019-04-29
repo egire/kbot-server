@@ -31,7 +31,7 @@ class pin:
         elif (type == "MOTOR"):
             self.kit = MotorKit()
         elif (type == "SONIC"):
-            self.sensor = sensor.sensor(self.name, self.type, 0, [self.pin_id])
+            self.sensor = sensor.sensor(self.name, self.type, 1, [self.pin_id])
         elif (type == "SWEEP"):
             self.kit = ServoKit(channels=self.channels)
             self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)

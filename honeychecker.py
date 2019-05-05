@@ -116,7 +116,7 @@ def honeyword(password=""):
 
 def initDB():
     ''' Initialize DB file if it does not currently exist '''
-    if not os.path.exists('users.db'):
+    if not os.path.exists('sweet.db'):
         with open('sweet.db', 'w+', newline='\n') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=schema)
             writer.writeheader()

@@ -165,24 +165,7 @@ def create(username, password, email):
                 user['password'+str(index)] = hash(password, s)[1].decode()
                 print(password)
             else:
-                genFunc = random.randint(0, 5)
-                genPass = ''
-                num = str(random.randint(0,999))
-                if (genFunc == 0):
-                    genPass = honeychecker.randomASCII(password+num, 0)
-                elif (genFunc == 1):
-                    genPass = honeychecker.randomPassword()
-                elif (genFunc == 2):
-                    genPass = honeychecker.randomPassword()
-                elif (genFunc == 3):
-                    randpass = honeychecker.randomPassword()
-                    genPass = honeychecker.remap(randpass)
-                elif (genFunc == 4):
-                    randpass = honeychecker.randomPassword()
-                    genPass = honeychecker.remap(randpass)
-                elif (genFunc == 5):
-                    randpass = honeychecker.randomPassword()
-                    genPass = honeychecker.remapNums(randpass+num)
+                genPass = honeychecker.honeyword(password)
                 print(genPass)
                 user['password'+str(hashindex)] = hash(genPass, s)[1].decode()
         

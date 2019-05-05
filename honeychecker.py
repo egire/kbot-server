@@ -88,17 +88,40 @@ def remapSyms(word, mapping=_SYM):
 
 
 def honeyword(password=""):
-    honeyword = ""
-    if password:
-        honeyword = remap(password)
-    yield
+    ''' General function to generate password '''
+    if password: password = randomPassword()
+    genFunc = random.randint(0, 5)
+    genPass = ''
+    num = str(random.randint(0,999))
+    if (genFunc == 0):
+        genPass = randomASCII(password+num, 0)
+    elif (genFunc == 1):
+        genPass = randomPassword()
+    elif (genFunc == 2):
+        genPass = randomPassword()
+    elif (genFunc == 3):
+        randpass = randomPassword()
+        genPass = remap(randpass)
+    elif (genFunc == 4):
+        randpass = randomPassword()
+        genPass = remap(randpass)
+    elif (genFunc == 5):
+        randpass = randomPassword()
+        genPass = remapNums(randpass+num)
+    else:
+        genPass = remap(password)
+        
+    return genPass
+
 
 def initDB():
+    ''' Initialize DB file if it does not currently exist '''
     if not os.path.exists('users.db'):
         with open('sweet.db', 'w+', newline='\n') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=schema)
             writer.writeheader()
-    
+
+
 def create(salt, index):
     initDB()
     global schema
@@ -161,9 +184,10 @@ def delete(salt):
     os.remove('sweet.db')
     os.rename('sweet.tmp', 'sweet.db')
 
+
 if __name__ == "__main__":
     addSweetword("test", 3)
     print(getSweetword("test"))
     delete("test")
     print(getSweetword("test"))
-    print(encodeASCII('test', 0))
+    print(randomASCII('test', 0))

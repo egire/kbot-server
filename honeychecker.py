@@ -93,8 +93,14 @@ def honeyword(password=""):
         honeyword = remap(password)
     yield
 
+def initDB():
+    if not os.path.exists('users.db'):
+        with open('sweet.db', 'w+', newline='\n') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=schema)
+            writer.writeheader()
     
 def create(salt, index):
+    initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
@@ -110,6 +116,7 @@ def create(salt, index):
 
 
 def read(salt, field=''):
+    initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
@@ -123,6 +130,7 @@ def read(salt, field=''):
 
 
 def update(salt, field='', value=None):
+    initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
@@ -140,6 +148,7 @@ def update(salt, field='', value=None):
 
 
 def delete(salt):
+    initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)

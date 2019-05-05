@@ -144,6 +144,7 @@ def initDB():
 
 
 def create(username, password, email):
+    initDB()
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
@@ -190,6 +191,7 @@ def create(username, password, email):
 
 
 def read(username, field=""):
+    initDB()
     global schema  
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
@@ -203,6 +205,7 @@ def read(username, field=""):
 
 
 def update(username, field="", value=None):
+    initDB()
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -221,6 +224,7 @@ def update(username, field="", value=None):
 
 
 def delete(username):
+    initDB()
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)

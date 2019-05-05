@@ -289,9 +289,9 @@ class json:
 if __name__ == "__main__":
     app = web.application(urls, globals())
     web.config.debug = True
-    certificate = '/home/pi/kbot/kbot-server/cert/cert.pem', 
-    private_key = '/home/pi/kbot/kbot-server/cert/privkey.pem'
-    HTTPServer.ssl_adapter = pyOpenSSLAdapter(certificate, private_key)
+    #certificate = '/home/pi/kbot/kbot-server/cert/cert.pem', 
+    #private_key = '/home/pi/kbot/kbot-server/cert/privkey.pem'
+    #HTTPServer.ssl_adapter = pyOpenSSLAdapter(certificate, private_key)
     #HTTPServer.ssl_adapter = BuiltinSSLAdapter()
     app.run()
     

@@ -1,7 +1,9 @@
 import web, json, csv, time, logging
 import pin, users
 from cheroot.server import HTTPServer
-from cheroot.ssl.builtin import BuiltinSSLAdapter
+#from cheroot.ssl.builtin import BuiltinSSLAdapter
+from cheroot.ssl.pyopenssl import pyOpenSSLAdapter
+import urllib.request
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
         
@@ -106,6 +108,10 @@ class login:
         user = users.login(i.username, i.password, ip)
         if user:
             Access_Load()
+            if(users.badactor):
+                urllib.request.urlopen("http://moonman1.mynetgear.com/video/cmd_pipe.php?cmd=qu%200")
+            else:
+                urllib.request.urlopen("http://moonman1.mynetgear.com/video/cmd_pipe.php?cmd=qu%2010")
             logging.info("Login: " + i.username + " (" + ip + ")")
             return user
         else:
@@ -258,7 +264,10 @@ class log:
         i = web.input(username=None, token=None)
         if users.validToken(i.username, i.token):
             i = web.input(tail=None, maxlines=None)
-            log = Access_Log(i.tail, int(i.maxlines))
+            if users.badactor:
+                log = 'User Login successful!'
+            else:
+                log = Access_Log(i.tail, int(i.maxlines))
             return log
         else: return ''
 
@@ -279,8 +288,10 @@ class json:
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
-    HTTPServer.ssl_adapter = BuiltinSSLAdapter(
-    certificate='cert/fullchain.pem', 
-    private_key='cert/privkey.pem')
+    web.config.debug = True
+    certificate = '/home/pi/kbot/kbot-server/cert/cert.pem', 
+    private_key = '/home/pi/kbot/kbot-server/cert/privkey.pem'
+    HTTPServer.ssl_adapter = pyOpenSSLAdapter(certificate, private_key)
+    #HTTPServer.ssl_adapter = BuiltinSSLAdapter()
     app.run()
     

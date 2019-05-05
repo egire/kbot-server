@@ -1,5 +1,5 @@
 import hashlib, uuid, datetime, csv, os, base64, random, logging
-import honeychecker, push
+import honeychecker#, push
 
 schema = ['username', 'email', 'admin', 'salt', 'token', 'ip']
 sweetcount = 6
@@ -21,12 +21,14 @@ def login(username, password, ip):
     else:
         return False
 
+
 def register(username, password, email):
     if (exists(username)):
         return False
     else:
         addUser(username, password, email)
         return True
+
 
 def validLogin(username, password):
     global badactor
@@ -51,7 +53,7 @@ def validLogin(username, password):
     for h in honeywords:
         if bytes(user["password"+str(h)], 'utf-8') == hashpw[1]:
             honeychecker.notifyHoneyword()
-            push.push()
+            #push.push() push notifications are unreliable 
             badactor = True
             return True
     # Bad login
@@ -91,14 +93,18 @@ def token():
     toke = base64.urlsafe_b64encode(os.urandom(32))
     return toke
 
+
 def setAdmin(isAdmin):
     update(username, "admin", int(isAdmin))
+    
     
 def getAdmin():
     return float(getUser(userName)["admin"])
 
+
 def getAdmins():
     return float(getUser(userName)["admin"])
+
 
 def getPassword(username):
     return getUser(userName)["password"]
@@ -129,11 +135,13 @@ def getUser(username):
     else:
         return None
 
+
 def initDB():
     if not os.path.exists('users.db'):
         with open('users.db', 'w+', newline='\n') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=schema)
             writer.writeheader()
+
 
 def create(username, password, email):
     global schema

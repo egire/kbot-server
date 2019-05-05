@@ -5,4 +5,4 @@ def push(msg=""):
     warning = 'KBot Breach'
     if msg:
         warning = msg
-    notify.send(warning, 'http://moonman1.mynetgear.com')
+    notify.send(warning, 'http://moonman1.mynetgear.com/kbot/logs.html')

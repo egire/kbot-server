@@ -18,6 +18,8 @@ Document serves to capture the hardware configuration of KBOT to facilitate soft
 
 ## Scope and Features
 
+
+
 *   Hardware
     *   Telepresence/autonomous robot made from COTS and 3D printed components focusing on design for assembly and expandability
     *   [ROB0025: Baron - 4WD Arduino Mobile Platform with Encoder](https://www.dfrobot.com/product-261.html)
@@ -48,7 +50,7 @@ Document serves to capture the hardware configuration of KBOT to facilitate soft
 *   Login Credentials
     *   Username: test
     *   Password: test
-    *   (or just register a new account)
+    *   (or register new account)
 
 
 ## Bill of Materials (BOM)
@@ -282,6 +284,33 @@ Document serves to capture the hardware configuration of KBOT to facilitate soft
 
 
 *   Default: Reboot RasPi or Restart kbot.service using systemctl Service (Provision steps have been followed)
-*   Debug: Execute ~/kbot.sh  from kbot terminal (see server POSTs and GETs and Python Errors)
+*   Debug: Run ~/kbot.sh  from kbot terminal (see server POSTs and GETs and Python Errors)
 
-<!-- Docs to Markdown version 1.0β17 -->
+
+### Configuring Pins
+
+
+
+*   Pin configuration file (CSV file loaded into memory on KBot start up)
+*   Pins.cfg defines the pin assignments and loads pins and sensors into memory
+*   Schema for pin configuration
+    *   Name
+    *   Pin ID (software)
+    *   Type
+    *   State (on/off, etc)
+    *   Mode (input/output)
+    *   Output range
+    *   Input range
+
+    Pins.cfg (Default pin configuration file for KBot):
+
+
+    ```
+    name,pin,type,state,mode,out_min,out_max,in_min,in_max
+    PAN,0,SERVO,0,OUT,20,180,0,0
+    TILT,1,SERVO,0,OUT,50,180,0,0
+    PING,12,SONIC,0,IN,0,1,3,300
+    HEAD,0,SWEEP,0,OUT,20,180,0,0
+    MOTOR,0,MOTOR,0,OUT,-1.0,1.0,0,0
+    LENCODER,23,GPIO,0,IN,0,0,0,1
+    RENCODER,24,GPIO,0,IN,0,0,0,1

@@ -1,0 +1,10 @@
+[Unit]
+Description=KBot Web Server
+After=network.target
+[Service]
+WorkingDirectory=/home/pi/kbot/kbot-server
+Type=forking
+User=pi
+ExecStart=/usr/bin/kbot.sh
+[Install]
+WantedBy=multi-user.target

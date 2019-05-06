@@ -9,18 +9,22 @@ _SYM = "#^)*(!@&$%"
 schema = ['salt', 'index']
     
 def addSweetword(salt, index):
+    ''' Add salt, index pair to database '''
     return create(salt, index)
     
     
 def notifyHoneyword():
+    ''' Send notification to email of breach '''
     notify.notify()
 
 
 def getSweetword(salt):
+    ''' Get the sweetword in DB using salt '''
     return read(salt, 'index')
 
 
 def validSweetword(salt):
+    ''' Check if salt exists in database '''
     if getSweetword(salt):
         return True
     else:
@@ -28,6 +32,7 @@ def validSweetword(salt):
 
 
 def randomASCII(word, pos=0):
+    ''' Randomize ASCII in a word start at an arbirary position within the word '''
     if pos > len(word):
         pos = len(word)
     ascii = word[0:pos]
@@ -37,6 +42,7 @@ def randomASCII(word, pos=0):
 
 
 def randomPassword(file='pws.txt'):
+    ''' Load from a password file into array and choose one at random '''
     pws = []
     
     f = open(file, 'r')
@@ -49,6 +55,7 @@ def randomPassword(file='pws.txt'):
 
 
 def remap(word, mapping=_LEET):
+    ''' Remap a set of chars to another set of chars using mapping '''
     mapword = ""
     for c in word:
         mapword += mapping[(ord(c)-ord('a')) % len(mapping)]
@@ -56,6 +63,7 @@ def remap(word, mapping=_LEET):
 
 
 def remapNums(word, mapping=_NUM):
+    ''' Find if char on ASCII Table and return true if number else non-number false '''
     mapword = ""
     for c in word:
         if (c.isdigit()):
@@ -66,6 +74,7 @@ def remapNums(word, mapping=_NUM):
 
 
 def isSym(char):
+    ''' Find if char on ASCII Table and return true if symbol else non-symbol false '''
     if ord(char) == ord('^') or ord(char) == ord('@') or (ord(char) >= ord('!')) and (ord(char) <= ord(')')):
         return True
     else:
@@ -73,6 +82,7 @@ def isSym(char):
 
     
 def remapSyms(word, mapping=_SYM):
+    ''' Remaps ASCII symbols using mapping '''
     mapword = ""
     for c in word:
         if (isSym(c)):
@@ -123,6 +133,7 @@ def initDB():
 
 
 def create(salt, index):
+    ''' Load db file into memory and create new entry '''
     initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
@@ -139,6 +150,7 @@ def create(salt, index):
 
 
 def read(salt, field=''):
+    ''' Load db file into memory and read an entry or field '''
     initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
@@ -153,6 +165,7 @@ def read(salt, field=''):
 
 
 def update(salt, field='', value=None):
+    ''' Load db file into memory and update entry or field '''
     initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:
@@ -171,6 +184,7 @@ def update(salt, field='', value=None):
 
 
 def delete(salt):
+    ''' Load db file into memory and delete entry from db '''
     initDB()
     global schema
     with open('sweet.db', 'r', newline='\n') as csvfile:

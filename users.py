@@ -37,7 +37,7 @@ def validLogin(username, password):
     hashpw = hash(password, bytes(salt, 'utf-8'))
     index = honeychecker.getSweetword(salt)
     
-    # Not in honeychecker (bad salt, not added to honeychecker?)
+    # Not in honeychecker (bad salt. Does not exist in honeychecker?)
     if not honeychecker.validSweetword(salt):
         badactor = True
         return False

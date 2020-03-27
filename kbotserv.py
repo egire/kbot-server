@@ -1,14 +1,15 @@
 import web, json, csv, time, logging
-import pin, users
-from cheroot.server import HTTPServer
-#from cheroot.ssl.builtin import BuiltinSSLAdapter
-from cheroot.ssl.pyopenssl import pyOpenSSLAdapter
-import urllib.request
+import kpin
+import users
+# from cheroot.server import HTTPServer
+# #from cheroot.ssl.builtin import BuiltinSSLAdapter
+# from cheroot.ssl.pyopenssl import pyOpenSSLAdapter
+# import urllib.request
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
-        
+
 gStorage = {} # memory storage
-gPinConfig = "pins.cfg" # pin config file 
+gPinConfig = "pins.cfg" # pin config file
 gSweep = False
 
 def savePinConfig():
@@ -28,7 +29,7 @@ def loadPinConfig():
             Access_Create(row['name'], row['pin'], row['type'], row['state'], row['mode'], out_range, in_range)
 
 def Access_Create(pin_name, pin_id, type, state, mode, out_range, in_range):
-    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
+    gStorage[pin_name] = kpin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
 
 def Access_Name(pin_name):
     return gStorage[pin_name].name
@@ -46,7 +47,8 @@ def Access_Save():
     savePinConfig()
 
 def Access_Load():
-    loadPinConfig()
+    if(len(gStorage) <= 0):
+        loadPinConfig()
 
 def Access_Move(leftFore, rightFore, leftAft, rightAft):
     gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
@@ -58,7 +60,7 @@ def Access_Sensor(name):
 def Access_Sweep(state):
     ping = Access_Sensor('PING')
     head = Access_Sensor('HEAD')
-    
+
     if(state):
         head.on()
     else:
@@ -84,7 +86,7 @@ urls = (
     '/add', 'add',
     '/switch', 'switch',
     '/delete', 'delete',
-    '/json', 'json',
+    '/storage', 'storage',
     '/save', 'save',
     '/rotate', 'rotate',
     '/log', 'log',
@@ -98,7 +100,7 @@ urls = (
 )
 
 #webpages
-        
+
 class login:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
@@ -107,17 +109,12 @@ class login:
         i = web.input(username=None, password=None)
         user = users.login(i.username, i.password, ip)
         if user:
-            Access_Load()
-            if(users.badactor):
-                urllib.request.urlopen("http://moonman1.mynetgear.com/video/cmd_pipe.php?cmd=qu%200")
-            else:
-                urllib.request.urlopen("http://moonman1.mynetgear.com/video/cmd_pipe.php?cmd=qu%2010")
             logging.info("Login: " + i.username + " (" + ip + ")")
             return user
         else:
             logging.info("Bad Login: " + i.username + " (" + ip + ")")
             return ''
-        
+
 class register:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
@@ -136,19 +133,19 @@ class move:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, leftFore=None, leftAft=None, rightFore=None, rightAft=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             Access_Move(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
         else: return ''
-        
+
 class add:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None, pin=None, type=None, state=None, mode=None, omin=None, omax=None, imin=None, imax=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             orange = [i.omin, i.omax]
             irange = [i.imin, i.imax]
-            Access_Create(i.name, i.pin, i.type, i.state, i.mode, orange, irange) 
+            Access_Create(i.name, i.pin, i.type, i.state, i.mode, orange, irange)
             logging.info(str(i.type)+" '" + i.name + "' at pin (" + i.pin + ")")
         else: return ''
 
@@ -157,8 +154,8 @@ class delete:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
-        if users.validToken(i.username, i.token):
-            item = Access_Storage(i.name) 
+        if users.isValidToken(i.username, i.token):
+            item = Access_Storage(i.name)
             item.output(0)
             Access_Delete(i.name)
             logging.info("Deleted pin (" + i.name + ")")
@@ -169,7 +166,7 @@ class rotate:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None, angle=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             servo = Access_Storage(i.name)
             servo.rotate(float(i.angle))
         else: return ''
@@ -179,18 +176,13 @@ class sensor:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             sensor = Access_Sensor(i.name)
-            
-            if users.badactor and not sensor.bad:
-                sensor.off()
-                sensor.reset()
-                sensor.bad = True
-                sensor.on()
-                
-            if not sensor.state: 
+
+            if not sensor.state:
                 sensor.reset()
                 sensor.on()
+
             inp = None
             while not inp:
                 inp = sensor.input()
@@ -203,17 +195,17 @@ class load:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             Access_Load()
         else: return ''
-        
+
 class sweep:
     def POST(self):
         global gSweep
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             if not gSweep:
                 Access_Sweep(True)
                 gSweep = True
@@ -227,7 +219,7 @@ class switch:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             io = Access_Storage(i.name)
             if(io.state == 0):
                 io.output(1)
@@ -242,17 +234,17 @@ class autonomous:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None);
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             Access_Autonomous()
             logging.info("Autonomous Mode active.")
         else: return ''
-        
+
 class save:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             Access_Save()
             logging.info("Pin configuration saved.")
         else: return ''
@@ -262,36 +254,34 @@ class log:
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
-        if users.validToken(i.username, i.token):
+        if users.isValidToken(i.username, i.token):
             i = web.input(tail=None, maxlines=None)
-            if users.badactor:
-                log = 'User Login successful!'
-            else:
-                log = Access_Log(i.tail, int(i.maxlines))
+            log = Access_Log(i.tail, int(i.maxlines))
             return log
-        else: return ''
+        else:
+            return ''
 
-class json:
+class storage:
     def POST(self):
         web.header('Content-Type','application/json; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
-        if users.validToken(i.username, i.token):
-            json = '['
-            for pin, val in gStorage.items():
-                json+=str(val)+','
-            if len(gStorage) > 0:
-                json = json[:-1]
-            json += ']'
-            return json
-        else: return ''
+        if users.isValidToken(i.username, i.token):
+            if(len(gStorage) > 0):
+                storage = "["
+                for pin_name, pin in gStorage.items():
+                    storage += json.dumps(pin.toJSON()) + ", "
+                storage = storage[:-2] + "]"
+                return storage
+            else:
+                return '[]'
+        return ''
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
     web.config.debug = True
-    #certificate = '/home/pi/kbot/kbot-server/cert/cert.pem', 
+    #certificate = '/home/pi/kbot/kbot-server/cert/cert.pem',
     #private_key = '/home/pi/kbot/kbot-server/cert/privkey.pem'
     #HTTPServer.ssl_adapter = pyOpenSSLAdapter(certificate, private_key)
     #HTTPServer.ssl_adapter = BuiltinSSLAdapter()
     app.run()
-    

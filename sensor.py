@@ -1,5 +1,6 @@
-import queue, threading, time, random
-import RPi.GPIO as GPIO
+import queue, threading
+#import RPi.GPIO as GPIO
+
 
 class sensor:
     def __init__(self, name="Sensor", type="SONIC", memsize=10, pin=[], outf=None, inf=None):
@@ -15,8 +16,7 @@ class sensor:
         self.inp = None
         self.bad = False
         self.lock = threading.RLock()
-    
-    
+
     def on(self):
         if self.state:
             return
@@ -27,35 +27,33 @@ class sensor:
         if not self.inp:
             self.inp = threading.Thread(target=self.input)
             self.inp.start()
-    
-    
+
     def off(self):
-        if not self.state: 
+        if not self.state:
             return
         self.state = False
         self.out.join()
         self.inp.join()
         self.out = None
-        self.inp = None      
-    
-    
+        self.inp = None
+
     def output(self):
-        if not self.state: return
+        if not self.state:
+            return
         while self.state:
             self.lock.acquire()
             out = self.outf()
             self.lock.release()
             self.queue.put(out)
         self.queue.task_done()
-    
-    
+
     def input(self):
-        if not self.state: return
-        if (self.queue.empty()): return None
+        if not self.state:
+            return
+        if (self.queue.empty()):
+            return None
         return self.queue.get(block=False, timeout=None)
-            
-    
+
     def reset(self):
         while not self.queue.empty():
             self.queue.get(block=False, timeout=None)
-    

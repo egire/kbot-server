@@ -1,25 +1,27 @@
-import hashlib, uuid, datetime, csv, os, base64, random, logging
-import honeychecker#, push
+import hashlib, csv, os, base64, json
+# import honeychecker#, push
 
-schema = ['username', 'email', 'admin', 'salt', 'token', 'ip']
-sweetcount = 6
-badactor = False
+schema = ['username', 'email', 'password', 'admin', 'salt', 'token', 'ip']
+# sweetcount = 6
+# badactor = False
+#
+# for i in range(sweetcount):
+#     schema.append('password'+str(i))
 
-for i in range(sweetcount):
-    schema.append('password'+str(i))
 
 def login(username, password, ip):
     if not exists(username):
-        return False
-        
-    if(validLogin(username, password)):
+        return ''
+
+    if(isValidLogin(username, password)):
         user = getUser(username)
         setToken(username)
         setIp(username, ip)
-        token = getToken(username)
-        return '[{"username":"'+user["username"]+'", "email": "'+user["email"]+'","token":"'+token+'"}]'
+        toke = getToken(username)
+        safeUser = {'username': user['username'], 'email': user['email'], 'token': toke}
+        return json.dumps(safeUser)
     else:
-        return False
+        return ''
 
 
 def register(username, password, email):
@@ -30,40 +32,24 @@ def register(username, password, email):
         return True
 
 
-def validLogin(username, password):
-    global badactor
+def isValidLogin(username, password):
+    # global badactor
     user = getUser(username)
     salt = user["salt"]
-    hashpw = hash(password, bytes(salt, 'utf-8'))
-    index = honeychecker.getSweetword(salt)
-    
-    # Not in honeychecker (bad salt. Does not exist in honeychecker?)
-    if not honeychecker.validSweetword(salt):
-        badactor = True
-        return False
-    
-    # Password from honeychecker database is correct (good actor login)
-    if bytes(user["password"+str(index)], 'utf-8') == hashpw[1]:
-        badactor = False
+    hashpw = (hash(password, bytes(salt, 'utf-8'))[1]).decode()
+
+    if(user["password"] == hashpw):
         return True
-    
-    # Password is honeyword (bad actor login)
-    honeywords = list(range(sweetcount))
-    honeywords.remove(int(index))
-    for h in honeywords:
-        if bytes(user["password"+str(h)], 'utf-8') == hashpw[1]:
-            honeychecker.notifyHoneyword()
-            #push.push() push notifications are unreliable 
-            badactor = True
-            return True
-    # Bad login
+
     return False
 
 
-def validToken(username, token):
-    validToken = getToken(username)
-    if token == validToken: return True
-    else: return False
+def isValidToken(username, token):
+    isValidToken = getToken(username)
+    if token == isValidToken:
+        return True
+    else:
+        return False
 
 
 def addUser(username, password, email):
@@ -71,6 +57,9 @@ def addUser(username, password, email):
 
 
 def exists(username):
+    if(username == ''):
+        return False
+
     user = getUser(username)
     if (user):
         return True
@@ -94,20 +83,20 @@ def token():
     return toke
 
 
-def setAdmin(isAdmin):
+def setAdmin(username, isAdmin):
     update(username, "admin", int(isAdmin))
-    
-    
-def getAdmin():
-    return float(getUser(userName)["admin"])
 
 
-def getAdmins():
-    return float(getUser(userName)["admin"])
+def getAdmin(username):
+    return float(getUser(username)["admin"])
+
+
+def getAdmins(username):
+    return float(getUser(username)["admin"])
 
 
 def getPassword(username):
-    return getUser(userName)["password"]
+    return getUser(username)["password"]
 
 
 def setToken(username):
@@ -116,7 +105,6 @@ def setToken(username):
 
 
 def getToken(username):
-    tok = token()
     return read(username, "token")
 
 
@@ -149,33 +137,25 @@ def create(username, password, email):
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
         for row in reader:
-            if row['username'] == username: return False
-    
+            if row['username'] == username:
+                return False
+
     with open('users.db', 'a+', newline='\n') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=schema)
-        
+
         s = salt()
-        index = random.randint(0, sweetcount-1)
-        honeychecker.addSweetword(s.decode(), index)
+
         user = {'username': username, 'email': email, 'admin': 0, 'token': 0, 'ip': '0.0.0.0'}
         user['salt'] = s.decode()
-        
-        for hashindex in range(0, sweetcount):
-            if hashindex == index:
-                user['password'+str(index)] = hash(password, s)[1].decode()
-                print(password)
-            else:
-                genPass = honeychecker.honeyword(password)
-                print(genPass)
-                user['password'+str(hashindex)] = hash(genPass, s)[1].decode()
-        
+        user['password'] = hash(password, s)[1].decode()
+
         writer.writerow(user)
         return True
 
 
 def read(username, field=""):
     initDB()
-    global schema  
+    global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
         for row in reader:
@@ -192,7 +172,7 @@ def update(username, field="", value=None):
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile)
-        
+
         with open('users.tmp', 'w', newline='\n') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=schema)
             writer.writeheader()
@@ -211,7 +191,7 @@ def delete(username):
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=schema)
-        
+
         with open('users.tmp', 'w', newline='\n') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=schema)
             for row in reader:
@@ -219,6 +199,7 @@ def delete(username):
                     writer.writerow(row)
     os.remove('users.db')
     os.rename('users.tmp', 'users.db')
+
 
 if __name__ == "__main__":
     initDB()

@@ -1,4 +1,4 @@
-import RPi.GPIO import GPIO
+from RPi.GPIO import GPIO
 from adafruit_servokit import ServoKit
 import sensor
 import json

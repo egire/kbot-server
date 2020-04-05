@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
+from adafruit_motorkit import MotorKit
 import sensor
 import json
 

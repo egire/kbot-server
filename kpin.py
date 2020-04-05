@@ -1,4 +1,5 @@
-from EmulatorGUI import GPIO
+import RPi.GPIO import GPIO
+from adafruit_servokit import ServoKit
 import sensor
 import json
 
@@ -27,17 +28,15 @@ class pin:
             PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             self.rotate(90)
         elif (type == "SERVO"):
-            test = 1
-            # self.kit = ServoKit(channels=self.channels)
-            # self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
+            self.kit = ServoKit(channels=self.channels)
+            self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
         elif (type == "MOTOR"):
-            test = 1
-            # self.kit = MotorKit()
+            self.kit = MotorKit()
         elif (type == "SONIC"):
             self.sensor = sensor.sensor(self.name, self.type, 1, [self.pin_id])
         elif (type == "SWEEP"):
-            # self.kit = ServoKit(channels=self.channels)
-            # self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
+            self.kit = ServoKit(channels=self.channels)
+            self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
             self.sensor = sensor.sensor(self.name, self.type, 1, self)
 
 
@@ -85,11 +84,10 @@ class pin:
 
     def move(self, leftFore, rightFore, leftAft, rightAft):
         if(self.type == "MOTOR"):
-            test = 1
-            # self.kit.motor1.throttle = self.clamp(leftFore)  #Left Fore
-            # self.kit.motor3.throttle = self.clamp(rightFore) #Right Fore
-            # self.kit.motor2.throttle = self.clamp(leftAft)   #Left Aft
-            # self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft
+            self.kit.motor1.throttle = self.clamp(leftFore)  #Left Fore
+            self.kit.motor3.throttle = self.clamp(rightFore) #Right Fore
+            self.kit.motor2.throttle = self.clamp(leftAft)   #Left Aft
+            self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft
 
 
     def stop(self):

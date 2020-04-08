@@ -45,7 +45,7 @@ class sensor:
             out = self.outf()
             self.lock.release()
             self.queue.put(out)
-        self.queue.task_done()
+            self.queue.task_done()
 
     def input(self):
         if not self.state:

@@ -1,10 +1,8 @@
 import web, json, csv, time, logging
 import kpin
 import users
-# from cheroot.server import HTTPServer
-# #from cheroot.ssl.builtin import BuiltinSSLAdapter
-# from cheroot.ssl.pyopenssl import pyOpenSSLAdapter
-# import urllib.request
+from cheroot.server import HTTPServer
+from cheroot.ssl.builtin import BuiltinSSLAdapter
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
@@ -62,9 +60,9 @@ def Access_Sweep(state):
     head = Access_Sensor('HEAD')
 
     if(state):
-        head.on()
+        ping.on()
     else:
-        head.off()
+        ping.off()
     return ''
 
 def Access_Autonomous():
@@ -81,6 +79,12 @@ def Access_Log(tail=True, maxlines=10):
             log = file.readlines()[-maxlines:]
             data = "<br>".join(log)
     return data
+
+
+
+class hello:
+    def GET(self):
+        return 'Hello, world!'
 
 urls = (
     '/add', 'add',
@@ -277,11 +281,10 @@ class storage:
                 return '[]'
         return ''
 
+
 if __name__ == "__main__":
+    # web.config.debug = False
+    HTTPServer.ssl_adapter = BuiltinSSLAdapter("/home/pi/kbot.cert",
+                                               "/home/pi/kbot.key")
     app = web.application(urls, globals())
-    web.config.debug = True
-    #certificate = '/home/pi/kbot/kbot-server/cert/cert.pem',
-    #private_key = '/home/pi/kbot/kbot-server/cert/privkey.pem'
-    #HTTPServer.ssl_adapter = pyOpenSSLAdapter(certificate, private_key)
-    #HTTPServer.ssl_adapter = BuiltinSSLAdapter()
     app.run()

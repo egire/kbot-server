@@ -9,13 +9,13 @@ schema = ['username', 'email', 'password', 'admin', 'salt', 'token', 'ip']
 #     schema.append('password'+str(i))
 
 
-def login(username, password, ip):
+def login(username, password, ip="0.0.0.0"):
     if not exists(username):
         return ''
 
     if(isValidLogin(username, password)):
         user = getUser(username)
-        if(isAdmin(user)):
+        if(isAdmin(username)):
             setToken(username)
         setIp(username, ip)
         toke = getToken(username)
@@ -34,7 +34,6 @@ def register(username, password, email):
 
 
 def isValidLogin(username, password):
-    # global badactor
     user = getUser(username)
     salt = user["salt"]
     hashpw = (hash(password, bytes(salt, 'utf-8'))[1]).decode()
@@ -44,16 +43,22 @@ def isValidLogin(username, password):
 
     return False
 
+
 def isValidToken(username, token):
-    isValidToken = getToken(username)
-    if token == isValidToken:
+    if token == 0:
+        return False
+
+    userToken = getToken(username)
+    if token == userToken:
         return True
+    elif userToken == 0:
+        return False
     else:
         return False
 
 
-def addUser(username, password, email):
-    return create(username, password, email)
+def addUser(username, password, email, admin=0):
+    return create(username, password, email, admin)
 
 
 def exists(username):
@@ -87,7 +92,14 @@ def setAdmin(username, isAdmin):
     update(username, "admin", bool(isAdmin))
 
 def isAdmin(username):
-    return bool(getUser(username)["admin"])
+    if not exists(username):
+        return False
+
+    admin = int(getUser(username)["admin"])
+    if admin > 0:
+        return True
+    else:
+        return False
 
 def getPassword(username):
     return getUser(username)["password"]
@@ -125,7 +137,7 @@ def initDB():
             writer.writeheader()
 
 
-def create(username, password, email):
+def create(username, password, email, admin):
     initDB()
     global schema
     with open('users.db', 'r', newline='\n') as csvfile:
@@ -139,7 +151,7 @@ def create(username, password, email):
 
         s = salt()
 
-        user = {'username': username, 'email': email, 'admin': 0, 'token': 0, 'ip': '0.0.0.0'}
+        user = {'username': username, 'email': email, 'admin': admin, 'token': 0, 'ip': '0.0.0.0'}
         user['salt'] = s.decode()
         user['password'] = hash(password, s)[1].decode()
 
@@ -197,6 +209,11 @@ def delete(username):
 
 if __name__ == "__main__":
     initDB()
-    addUser("test", "test", "test@test.com")
+    addUser("test", "pass", "test@test.com", 0)
+    addUser("testAdmin", "pass", "testadmin@test.com", 1)
     print(login("test", "pass", "0.0.0.0"))
+    print(login("testAdmin", "pass", "0.0.0.0"))
+    print(isAdmin("test"))
+    print(isAdmin("testAdmin"))
     delete("test")
+    delete("testAdmin")

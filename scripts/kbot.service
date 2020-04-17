@@ -5,6 +5,6 @@ After=network.target
 WorkingDirectory=/home/pi/kbot/kbot-server
 Type=forking
 User=pi
-ExecStart=/usr/bin/kbot.sh
+ExecStart=/home/pi/start-kbot.sh
 [Install]
 WantedBy=multi-user.target

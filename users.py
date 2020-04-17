@@ -16,6 +16,7 @@ def login(username, password, ip="0.0.0.0"):
     if(isValidLogin(username, password)):
         user = getUser(username)
         if(isAdmin(username)):
+            print("Admin")
             setToken(username)
         setIp(username, ip)
         toke = getToken(username)

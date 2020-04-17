@@ -14,7 +14,6 @@ class sensor:
         self.meta = dict()
         self.out = None
         self.inp = None
-        self.bad = False
         self.lock = threading.RLock()
 
     def on(self):

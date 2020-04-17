@@ -15,7 +15,8 @@ def login(username, password, ip):
 
     if(isValidLogin(username, password)):
         user = getUser(username)
-        setToken(username)
+        if(isAdmin(user)):
+            setToken(username)
         setIp(username, ip)
         toke = getToken(username)
         safeUser = {'username': user['username'], 'email': user['email'], 'token': toke}
@@ -42,7 +43,6 @@ def isValidLogin(username, password):
         return True
 
     return False
-
 
 def isValidToken(username, token):
     isValidToken = getToken(username)
@@ -84,16 +84,10 @@ def token():
 
 
 def setAdmin(username, isAdmin):
-    update(username, "admin", int(isAdmin))
+    update(username, "admin", bool(isAdmin))
 
-
-def getAdmin(username):
-    return float(getUser(username)["admin"])
-
-
-def getAdmins(username):
-    return float(getUser(username)["admin"])
-
+def isAdmin(username):
+    return bool(getUser(username)["admin"])
 
 def getPassword(username):
     return getUser(username)["password"]

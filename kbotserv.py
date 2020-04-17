@@ -1,5 +1,5 @@
 import web, json, csv, time, logging
-import kpin
+import pin
 import users
 from cheroot.server import HTTPServer
 from cheroot.ssl.builtin import BuiltinSSLAdapter
@@ -27,7 +27,7 @@ def loadPinConfig():
             Access_Create(row['name'], row['pin'], row['type'], row['state'], row['mode'], out_range, in_range)
 
 def Access_Create(pin_name, pin_id, type, state, mode, out_range, in_range):
-    gStorage[pin_name] = kpin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
+    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
 
 def Access_Name(pin_name):
     return gStorage[pin_name].name
@@ -55,14 +55,14 @@ def Access_Sensor(name):
     sensor = (Access_Storage(name)).sensor
     return sensor
 
-def Access_Sweep(state):
-    ping = Access_Sensor('PING')
-    head = Access_Sensor('HEAD')
+def Access_Sweep():
+    ping = Access_Storage(name)
+    head = Access_Storage(name)
 
-    if(state):
-        ping.on()
+    if(gSweep):
+        head.on()
     else:
-        ping.off()
+        head.off()
     return ''
 
 def Access_Autonomous():

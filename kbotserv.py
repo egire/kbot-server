@@ -1,4 +1,4 @@
-import web, json, csv, time, logging
+import web, json, csv, time, base64, logging
 import pin
 import users
 from cheroot.server import HTTPServer
@@ -65,6 +65,12 @@ def Access_Sweep():
         head.off()
     return ''
 
+def Access_Cam(name):
+    # config file dict of cams, map name to cam
+    data = open("/dev/shm/mjpeg/cam.jpg", "r").read()
+    encoded = "data:image/png;base64,"+base64.b64encode(data)
+    return encoded
+
 def Access_Autonomous():
     return ''
 
@@ -101,9 +107,18 @@ urls = (
     '/sensor', 'sensor',
     '/autonomous', 'autonomous',
     '/sweep', 'sweep'
+    '/cam', 'cam'
 )
 
 #webpages
+class cam:
+    def POST(self):
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None, name=None)
+        if users.isValidToken(i.username, i.token):
+            return Access_Cam(i.name)
+        else: return ''
 
 class login:
     def POST(self):

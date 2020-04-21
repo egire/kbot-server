@@ -67,9 +67,10 @@ def Access_Sweep():
 
 def Access_Cam(name):
     # config file dict of cams, map name to cam
-    data = open("/dev/shm/mjpeg/cam.jpg", "r").read()
-    encoded = "data:image/png;base64,"+base64.b64encode(data)
-    return encoded
+    with open("/dev/shm/mjpeg/cam.jpg", 'rb') as f:
+        data = f.read()
+        encoded = "data:image/png;base64,"+base64.b64encode(data)
+        return encoded
 
 def Access_Autonomous():
     return ''

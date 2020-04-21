@@ -86,12 +86,6 @@ def Access_Log(tail=True, maxlines=10):
             data = "<br>".join(log)
     return data
 
-
-
-class hello:
-    def GET(self):
-        return 'Hello, world!'
-
 urls = (
     '/add', 'add',
     '/switch', 'switch',

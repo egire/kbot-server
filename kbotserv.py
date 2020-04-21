@@ -69,7 +69,7 @@ def Access_Cam(name):
     # config file dict of cams, map name to cam
     with open("/dev/shm/mjpeg/cam.jpg", 'rb') as f:
         data = f.read()
-        encoded = "data:image/png;base64,"+str(base64.b64encode(data))
+        encoded = "data:image/png;base64,"+str(base64.b64encode(data).decode('ascii'))
         return encoded
 
 def Access_Autonomous():

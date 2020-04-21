@@ -106,7 +106,7 @@ urls = (
     '/register', 'register',
     '/sensor', 'sensor',
     '/autonomous', 'autonomous',
-    '/sweep', 'sweep'
+    '/sweep', 'sweep',
     '/cam', 'cam'
 )
 

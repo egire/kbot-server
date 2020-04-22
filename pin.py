@@ -26,7 +26,6 @@ class pin:
                 GPIO.setup(int(self.pin_id), GPIO.IN)
         elif (type == "PWM"):
             duty_min = 3
-            PWM.
             PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             self.rotate(90)
         elif (type == "SERVO"):

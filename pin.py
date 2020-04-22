@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import RPi.PWM as PWM
 from adafruit_servokit import ServoKit
 from adafruit_motorkit import MotorKit
 import sensor

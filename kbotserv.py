@@ -1,6 +1,5 @@
 import web, json, csv, time, base64, logging
-import pin
-import users
+import pin, users, ultrasweep
 from cheroot.server import HTTPServer
 from cheroot.ssl.builtin import BuiltinSSLAdapter
 
@@ -8,7 +7,7 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
 
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file
-gSweep = False
+gUltrasweep = None
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -56,13 +55,15 @@ def Access_Sensor(name):
     return sensor
 
 def Access_Sweep():
-    ping = Access_Storage(name)
-    head = Access_Storage(name)
+    if gUltrasweep:
+        ping_pin = Access_Storage("PING")
+        head_pin = Access_Storage("HEAD")
+        gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
 
-    if(gSweep):
-        head.on()
+    if(gUltrasweep.state == 1):
+        gUltrasweep.on()
     else:
-        head.off()
+        gUltrasweep.off()
     return ''
 
 def Access_Cam(name):
@@ -150,6 +151,8 @@ class move:
         if users.isValidToken(i.username, i.token):
             Access_Move(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
         else: return ''
+
+
 
 class add:
     def POST(self):

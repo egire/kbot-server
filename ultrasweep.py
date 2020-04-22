@@ -1,21 +1,22 @@
 from sensor import sensor
 import RPi.GPIO as GPIO
 
-class sweep:
-    def __init__(self, name="Sensor", memsize=10, pin=[]):
-        self.sonic = sensor(name, "SONIC", 1, pin[0], self.ping)
-        self.sweep = sensor(name, "SWEEP", 1, pin[1], self.sweep)
+class ultrasweep:
+    def __init__(self, name="ULTRASWEEP", memsize=10, sonic_pin, sweep_pin):
+        self.sonic = sensor(name, "SONIC", 1, sonic_pin, self.ping)
+        self.sweep = sensor(name, "SWEEP", 1, sweep_pin, self.sweep)
+        self.state = 0
 
 
     def on(self):
         self.sonic.on()
         self.sweep.on()
+        self.state = 1
 
-    
     def off(self):
         self.sonic.off()
         self.sweep.off()
-
+        self.state = 0
 
     def sweep(self, deg=1, rate=0.005, srange=[10.0, 180.0]):
         if not self.state: return

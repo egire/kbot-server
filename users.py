@@ -46,7 +46,7 @@ def isValidLogin(username, password):
 
 
 def isValidToken(username, token):
-    if token == 0:
+    if token == "0":
         return False
 
     userToken = getToken(username)

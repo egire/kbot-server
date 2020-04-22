@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-import RPi.PWM as PWM
 from adafruit_servokit import ServoKit
 from adafruit_motorkit import MotorKit
 import sensor
@@ -27,6 +26,7 @@ class pin:
                 GPIO.setup(int(self.pin_id), GPIO.IN)
         elif (type == "PWM"):
             duty_min = 3
+            PWM.
             PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             self.rotate(90)
         elif (type == "SERVO"):

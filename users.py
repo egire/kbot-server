@@ -57,7 +57,6 @@ def isValidToken(username, token):
     else:
         return False
 
-
 def addUser(username, password, email, admin=0):
     return create(username, password, email, admin)
 
@@ -97,7 +96,7 @@ def isAdmin(username):
         return False
 
     admin = int(getUser(username)["admin"])
-    if admin > 0:
+    if admin != 0:
         return True
     else:
         return False

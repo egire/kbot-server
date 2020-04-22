@@ -2,7 +2,7 @@ from sensor import sensor
 import RPi.GPIO as GPIO
 
 class ultrasweep:
-    def __init__(self, name="ULTRASWEEP", memsize=10, sonic_pin, sweep_pin):
+    def __init__(self, name="ULTRASWEEP", memsize=10, sonic_pin=12, sweep_pin=0):
         self.sonic = sensor(name, "SONIC", 1, sonic_pin, self.ping)
         self.sweep = sensor(name, "SWEEP", 1, sweep_pin, self.sweep)
         self.state = 0

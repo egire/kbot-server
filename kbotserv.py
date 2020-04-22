@@ -235,10 +235,10 @@ class switch:
         i = web.input(username=None, token=None, name=None)
         if users.isValidToken(i.username, i.token):
             io = Access_Storage(i.name)
-            if(io.state == 0):
+            if(int(io.state) == 0):
                 io.output(1)
                 logging.info(i.name + " switched ON")
-            elif(io.state == 1):
+            elif(int(io.state) == 1):
                 io.output(0)
                 logging.info(i.name + " switched OFF")
         else: return ''

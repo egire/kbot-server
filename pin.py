@@ -20,7 +20,8 @@ class pin:
             if(self.mode == "OUT"):
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(int(self.pin_id), GPIO.OUT)
-                GPIO.output(int(self.pin_id), GPIO.HIGH)
+                GPIO.output(int(self.pin_id), GPIO.LOW)
+                self.state = 0
             elif(self.mode == "IN"):
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(int(self.pin_id), GPIO.IN)
@@ -42,7 +43,7 @@ class pin:
 
 
     def output(self, state):
-        state = self.clamp(self.state, self.out_range[0], self.out_range[1])
+        state = self.clamp(state, int(self.out_range[0]), int(self.out_range[1]))
         if(self.type == "GPIO"):
             self.mode = "OUT"
             GPIO.setup(self.pin_id, GPIO.OUT)

@@ -34,6 +34,9 @@ class ultrasweep:
         starttime = time.time()
         endtime = time.time()
         distance = -1
+        print(self.sonic.pin)
+        print(self.pin)
+
         GPIO.setup(int(self.pin), GPIO.OUT)
         GPIO.output(int(self.pin), 0)
         time.sleep(0.000002)

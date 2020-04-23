@@ -1,6 +1,7 @@
 from sensor import sensor
 import RPi.GPIO as GPIO
-import timeout
+import time
+
 class ultrasweep:
     def __init__(self, name="ULTRASWEEP", memsize=10, sonic_pin=12, sweep_pin=0):
         self.sonic = sensor(name, "SONIC", 1, sonic_pin, self.ping)

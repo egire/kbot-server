@@ -195,14 +195,15 @@ class sensor:
         i = web.input(username=None, token=None, name=None)
         if users.isValidToken(i.username, i.token):
             sensor = Access_Sensor(i.name)
+            inp = None
 
             if not sensor.state:
                 sensor.reset()
                 sensor.on()
 
-            inp = None
             while not inp:
                 inp = sensor.input()
+
             json = '{"x": ' + str(inp[0]) + ', "y": ' + str(inp[1]) + '}'
             return json
         else: return ''
@@ -223,12 +224,7 @@ class sweep:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
         if users.isValidToken(i.username, i.token):
-            if not gSweep:
-                Access_Sweep(True)
-                gSweep = True
-            else:
-                Access_Sweep(False)
-                gSweep = False
+            Access_Sweep()
         else: return ''
 
 class switch:

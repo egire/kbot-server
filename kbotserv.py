@@ -55,7 +55,7 @@ def Access_Sensor(name):
     return sensor
 
 def Access_Sweep():
-    if gUltrasweep:
+    if gUltrasweep == None:
         ping_pin = Access_Storage("PING")
         head_pin = Access_Storage("HEAD")
         gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
@@ -196,6 +196,10 @@ class sensor:
         if users.isValidToken(i.username, i.token):
             sensor = None
             if i.name == "ULTRASWEEP":
+                if gUltrasweep == None:
+                    ping_pin = Access_Storage("PING")
+                    head_pin = Access_Storage("HEAD")
+                    gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
                 sensor = gUltrasweep
             else:
                 sensor = Access_Sensor(i.name)

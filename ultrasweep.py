@@ -7,7 +7,6 @@ class ultrasweep:
         self.sweep = sensor(name, "SWEEP", 1, sweep_pin, self.sweep)
         self.state = 0
 
-
     def on(self):
         self.sonic.on()
         self.sweep.on()

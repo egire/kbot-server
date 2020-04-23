@@ -194,17 +194,21 @@ class sensor:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
         if users.isValidToken(i.username, i.token):
-            sensor = Access_Sensor(i.name)
-            inp = None
+            if i.name == "ULTRASWEEP":
+                sensor = gUltrasweep
+            else:
+                sensor = Access_Sensor(i.name)
+
+            sensorInput = None
 
             if not sensor.state:
                 sensor.reset()
                 sensor.on()
 
-            while not inp:
-                inp = sensor.input()
+            while not sensorInput:
+                sensorInput = sensor.input()
 
-            json = '{"x": ' + str(inp[0]) + ', "y": ' + str(inp[1]) + '}'
+            json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
             return json
         else: return ''
 

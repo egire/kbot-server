@@ -11,12 +11,12 @@ class ultrasweep:
 
     def on(self):
         self.sonic.on()
-        self.sweep.on()
+        #self.sweep.on()
         self.state = 1
 
     def off(self):
         self.sonic.off()
-        self.sweep.off()
+        #self.sweep.off()
         self.state = 0
 
     def sweep(self, deg=1, rate=0.005, srange=[10.0, 180.0]):

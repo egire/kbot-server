@@ -207,10 +207,10 @@ class sensor:
             sensorInput = None
 
             if not sensor.state:
-                sensor.sonic.reset()
-                sensor.sonic.on()
+                sensor.reset()
+                sensor.on()
 
-            while not sensorInput:
+            while sensorInput is None:
                 print(sensor.input())
                 sensorInput = sensor.input()
 

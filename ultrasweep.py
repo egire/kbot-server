@@ -20,13 +20,12 @@ class ultrasweep:
 
     def sweep(self, deg=1, rate=0.005, srange=[10.0, 180.0]):
         if not self.state: return
-        if(self.type == "SWEEP"):
-            sweep = list(range(int(srange[0]), int(srange[1]), deg))
-            sweep += list(reversed(sweep))
-            for i in sweep:
-                self.pin.rotate(i)
-                self.meta['angle'] = i
-                time.sleep(rate)
+        sweep = list(range(int(srange[0]), int(srange[1]), deg))
+        sweep += list(reversed(sweep))
+        for i in sweep:
+            self.pin.rotate(i)
+            self.meta['angle'] = i
+            time.sleep(rate)
 
 
     def ping(self):

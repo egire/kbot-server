@@ -206,10 +206,9 @@ class sensor:
 
             sensorInput = None
 
-            if not sensor.state:
-                sensor.reset()
-                sensor.on()
-
+            sensor.reset()
+            sensor.on()
+            
             while sensorInput is None:
                 print(sensor.input())
                 sensorInput = sensor.input()

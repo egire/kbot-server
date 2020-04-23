@@ -24,7 +24,7 @@ class ultrasweep:
         sweep = list(range(int(srange[0]), int(srange[1]), deg))
         sweep += list(reversed(sweep))
         for i in sweep:
-            self.sweep.rotate(i)
+            self.sweep.pin.rotate(i)
             self.sweep.meta['angle'] = i
             time.sleep(rate)
 
@@ -36,16 +36,16 @@ class ultrasweep:
         endtime = time.time()
         distance = -1
 
-        GPIO.setup(int(self.sonic.pin), GPIO.OUT)
-        GPIO.output(int(self.sonic.pin), 0)
+        GPIO.setup(self.sonic.pin.pin_id, GPIO.OUT)
+        GPIO.output(self.sonic.pin.pin_id, 0)
         time.sleep(0.000002)
-        GPIO.output(int(self.sonic.pin), 1)
+        GPIO.output(self.sonic.pin.pin_id, 1)
         time.sleep(0.000005)
-        GPIO.output(int(self.sonic.pin), 0)
-        GPIO.setup(int(self.sonic.pin), GPIO.IN)
-        while GPIO.input(int(self.sonic.pin))==0:
+        GPIO.output(self.sonic.pin.pin_id, 0)
+        GPIO.setup(self.sonic.pin.pin_id, GPIO.IN)
+        while GPIO.input(self.sonic.pin.pin_id)==0:
            starttime=time.time()
-        while GPIO.input(int(self.sonic.pin))==1:
+        while GPIO.input(self.sonic.pin.pin_id)==1:
            endtime=time.time()
         duration=endtime-starttime
         # Distance is defined as time/2 (there and back) * speed of sound 34300 cm/s

@@ -55,6 +55,7 @@ def Access_Sensor(name):
     return sensor
 
 def Access_Sweep():
+    global gUltrasweep
     if gUltrasweep == None:
         ping_pin = Access_Storage("PING")
         head_pin = Access_Storage("HEAD")

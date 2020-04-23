@@ -7,6 +7,7 @@ class ultrasweep:
         self.sonic = sensor(name, "SONIC", 1, sonic_pin, self.ping)
         self.sweep = sensor(name, "SWEEP", 1, sweep_pin, self.sweep)
         self.state = 0
+        self.pin
 
     def on(self):
         self.sonic.on()
@@ -33,16 +34,16 @@ class ultrasweep:
         starttime = time.time()
         endtime = time.time()
         distance = -1
-        GPIO.setup(self.sonic.pin, GPIO.OUT)
-        GPIO.output(self.sonic.pin, 0)
+        GPIO.setup(self.pin, GPIO.OUT)
+        GPIO.output(self.pin, 0)
         time.sleep(0.000002)
-        GPIO.output(self.sonic.pin, 1)
+        GPIO.output(self.pin, 1)
         time.sleep(0.000005)
-        GPIO.output(self.sonic.pin, 0)
-        GPIO.setup(self.sonic.pin, GPIO.IN)
-        while GPIO.input(self.sonic.pin)==0:
+        GPIO.output(self.pin, 0)
+        GPIO.setup(self.pin, GPIO.IN)
+        while GPIO.input(self.pin)==0:
            starttime=time.time()
-        while GPIO.input(self.sonic.pin)==1:
+        while GPIO.input(self.pin)==1:
            endtime=time.time()
         duration=endtime-starttime
         # Distance is defined as time/2 (there and back) * speed of sound 34300 cm/s

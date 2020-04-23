@@ -194,6 +194,7 @@ class sensor:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None)
         if users.isValidToken(i.username, i.token):
+            sensor = None
             if i.name == "ULTRASWEEP":
                 sensor = gUltrasweep
             else:

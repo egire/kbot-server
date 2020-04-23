@@ -5,9 +5,9 @@ from cheroot.ssl.builtin import BuiltinSSLAdapter
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
-gStorage = {} # memory storage
-gPinConfig = "pins.cfg" # pin config file
-gUltrasweep = None
+global gStorage = {} # memory storage
+global gPinConfig = "pins.cfg" # pin config file
+global gUltrasweep = None
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -196,7 +196,7 @@ class sensor:
         if users.isValidToken(i.username, i.token):
             sensor = None
             if i.name == "ULTRASWEEP":
-                if gUltrasweep == None:
+                if gUltrasweep is None:
                     ping_pin = Access_Storage("PING")
                     head_pin = Access_Storage("HEAD")
                     gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);

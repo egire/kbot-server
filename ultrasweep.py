@@ -59,6 +59,4 @@ class ultrasweep:
 
 
     def input(self):
-        if not self.state:
-            return None
         return self.sonic.input()

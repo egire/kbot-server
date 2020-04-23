@@ -5,9 +5,9 @@ from cheroot.ssl.builtin import BuiltinSSLAdapter
 
 logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
 
-global gStorage = {} # memory storage
-global gPinConfig = "pins.cfg" # pin config file
-global gUltrasweep = None
+gStorage = {} # memory storage
+gPinConfig = "pins.cfg" # pin config file
+gUltrasweep = None
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -152,8 +152,6 @@ class move:
             Access_Move(float(i.leftFore), float(i.rightFore), float(i.leftAft), float(i.rightAft))
         else: return ''
 
-
-
 class add:
     def POST(self):
         web.header('Content-Type','text/plain; charset=utf-8')
@@ -196,6 +194,7 @@ class sensor:
         if users.isValidToken(i.username, i.token):
             sensor = None
             if i.name == "ULTRASWEEP":
+                global gUltrasweep
                 if gUltrasweep is None:
                     ping_pin = Access_Storage("PING")
                     head_pin = Access_Storage("HEAD")

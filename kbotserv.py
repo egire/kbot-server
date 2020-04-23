@@ -211,6 +211,7 @@ class sensor:
                 sensor.sonic.on()
 
             while not sensorInput:
+                print(sensor.input())
                 sensorInput = sensor.input()
 
             json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'

@@ -38,7 +38,7 @@ class sensor:
 
     def output(self):
         if not self.state:
-            return
+            return None
         while self.state:
             self.lock.acquire()
             out = self.outf()
@@ -48,7 +48,7 @@ class sensor:
 
     def input(self):
         if not self.state:
-            return
+            return None
         if (self.queue.empty()):
             return None
         return self.queue.get(block=False, timeout=None)

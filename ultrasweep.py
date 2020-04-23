@@ -54,11 +54,10 @@ class ultrasweep:
 
 
     def reset(self):
-        while not self.queue.empty():
-            self.queue.get(block=False, timeout=None)
+        self.sonic.reset()
 
 
     def input(self):
-        if not self.state: return
-        if (self.ping.queue.empty()): return None
-        return self.queue.get(block=False, timeout=None)
+        if not self.state:
+            return None
+        return self.sonic.input()

@@ -199,7 +199,7 @@ class sensor:
                 if gUltrasweep is None:
                     ping_pin = Access_Storage("PING")
                     head_pin = Access_Storage("HEAD")
-                    gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
+                    gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 1, ping_pin, head_pin);
                 sensor = gUltrasweep
             else:
                 sensor = Access_Sensor(i.name)
@@ -207,8 +207,8 @@ class sensor:
             sensorInput = None
 
             if not sensor.state:
-                sensor.reset()
-                sensor.on()
+                sensor.sonic.reset()
+                sensor.sonic.on()
 
             while not sensorInput:
                 sensorInput = sensor.input()

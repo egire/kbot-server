@@ -56,12 +56,12 @@ def Access_Sensor(name):
 
 def Access_Sweep():
     global gUltrasweep
-    if gUltrasweep == None:
+    if gUltrasweep is None:
         ping_pin = Access_Storage("PING")
         head_pin = Access_Storage("HEAD")
         gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
 
-    if(gUltrasweep.state == 1):
+    if(gUltrasweep.state == 0):
         gUltrasweep.on()
     else:
         gUltrasweep.off()

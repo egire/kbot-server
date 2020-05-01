@@ -206,11 +206,11 @@ class sensor:
 
             sensorInput = None
 
-            sensor.reset()
-            sensor.on()
-            
+            if not sensor.state:
+                sensor.reset()
+                sensor.on()
+
             while sensorInput is None:
-                print(sensor.input())
                 sensorInput = sensor.input()
 
             json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'

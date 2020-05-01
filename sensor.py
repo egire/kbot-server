@@ -1,9 +1,7 @@
 import queue, threading
-#import RPi.GPIO as GPIO
-
 
 class sensor:
-    def __init__(self, name="Sensor", type="SONIC", memsize=10, pin=[], outf=None, inf=None):
+    def __init__(self, name="Sensor", type="SONIC", memsize=10, pin=None, outf=None, inf=None):
         self.name = name
         self.type = type
         self.pin = pin
@@ -38,7 +36,7 @@ class sensor:
 
     def output(self):
         if not self.state:
-            return None
+            return
         while self.state:
             self.lock.acquire()
             out = self.outf()
@@ -47,9 +45,7 @@ class sensor:
             self.queue.task_done()
 
     def input(self):
-        if not self.state:
-            return None
-        if (self.queue.empty()):
+        if not self.state or self.queue.empty():
             return None
         return self.queue.get(block=False, timeout=None)
 

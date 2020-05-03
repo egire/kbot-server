@@ -74,7 +74,7 @@ def Access_Ads():
         ads_pin = Access_Storage("ADS2")
         gAds = ads1115.ads1115("IRDISTANCE", 10, ads_pin)
 
-    if not sensor.state:
+    if not gAds.state:
         gAds.reset()
         gAds.on()
 

@@ -8,7 +8,10 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file
 gUltrasweep = None
-gAds0, gAds1, gAds2, gAds3 = None
+gAds0 = None
+gAds1 = None
+gAds2 = None
+gAds3 = None
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:

@@ -1,4 +1,4 @@
-import hashlib, csv, os, base64, json
+import hashlib, csv, os, base64
 # import honeychecker#, push
 
 schema = ['username', 'email', 'password', 'admin', 'salt', 'token', 'ip']
@@ -20,7 +20,7 @@ def login(username, password, ip="0.0.0.0"):
         setIp(username, ip)
         toke = getToken(username)
         safeUser = {'username': user['username'], 'email': user['email'], 'admin': user['admin'], 'token': toke}
-        return json.dumps(safeUser)
+        return safeUser
     else:
         return ''
 

@@ -187,7 +187,7 @@ class login:
                 logging.info("Admin Login:" + i.username + "(" + ip + ")")
             else:
                 logging.info("Login: " + i.username + " (" + ip + ")")
-            return user
+            return json.dumps(safeUser)
         else:
             logging.info("Bad Login: " + i.username + " (" + ip + ")")
             return ''

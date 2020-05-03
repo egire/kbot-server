@@ -23,7 +23,14 @@ class ads1115:
         #2.8V at 15cm
         #0.4V at 150cm
         #print(self.chan.value, self.chan.voltage)
-        return self.chan.value, self.chan.voltage
+        now = time.time()
+
+        2.8 -> 15
+        0.4 -> 150
+
+        x = float(self.chan.voltage)
+        distance = (-225.0/4.0)*x + 345.0/2.0
+        return now, distance
 
     def reset(self):
         self.irdistance.reset()

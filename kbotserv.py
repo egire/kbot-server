@@ -81,8 +81,7 @@ def Access_Ads():
     sensorInput = None
     while sensorInput is None:
         sensorInput = gAds.input()
-
-    print(sensorInput[0], sensorInput[1])
+    
     json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
     return json
 

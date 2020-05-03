@@ -1,6 +1,7 @@
 from sensor import sensor
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
+import time
 
 class ads1115:
     def __init__(self, name="ADS", memsize=10, pin=None):

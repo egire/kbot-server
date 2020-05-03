@@ -263,7 +263,7 @@ class ads:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
         if users.isValidToken(i.username, i.token):
-            Access_Ads()
+            return Access_Ads()
         else: return ''
 
 class switch:

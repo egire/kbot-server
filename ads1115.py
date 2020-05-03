@@ -7,7 +7,7 @@ class ads1115:
         self.pin = pin
         self.init = ADS.ADS1115(self.pin.i2c)
         self.chan = AnalogIn(self.init, pinToAdsChannel(self.pin.pin_id))
-        self.irdistance = sensor(name, "I2C", 1, pin, self.read)
+        self.irdistance = sensor(name, "I2C", memsize, pin, self.read)
         self.state = False
 
     def on(self):

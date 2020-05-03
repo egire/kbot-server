@@ -72,12 +72,19 @@ def Access_Ads():
     global gAds
     if gAds is None:
         ads_pin = Access_Storage("ADS2")
-        gAds = ads1115.ads1115("IRDISTANCE", 10, ads_pin);
+        gAds = ads1115.ads1115("IRDISTANCE", 10, ads_pin)
 
-    if(gAds.state == False):
+    if not sensor.state:
+        gAds.reset()
         gAds.on()
-    else:
-        gAds.off()
+
+    sensorInput = None
+    while sensorInput is None:
+        sensorInput = gAds.input()
+
+    json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
+    return json
+
     return ''
 
 def Access_Cam(name):
@@ -213,7 +220,7 @@ class sensor:
                 if gUltrasweep is None:
                     ping_pin = Access_Storage("PING")
                     head_pin = Access_Storage("HEAD")
-                    gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 1, ping_pin, head_pin);
+                    gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 1, ping_pin, head_pin)
                 sensor = gUltrasweep
             else:
                 sensor = Access_Sensor(i.name)

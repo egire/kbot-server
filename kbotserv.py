@@ -82,10 +82,9 @@ def Access_Ads():
     while sensorInput is None:
         sensorInput = gAds.input()
 
+    print(sensorInput[0], sensorInput[1])
     json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
     return json
-
-    return ''
 
 def Access_Cam(name):
     # config file dict of cams, map name to cam

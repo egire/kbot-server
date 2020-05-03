@@ -22,7 +22,7 @@ class ads1115:
         if not self.state: return
         #2.8V at 15cm
         #0.4V at 150cm
-        print(self.chan.value, self.chan.voltage)
+        #print(self.chan.value, self.chan.voltage)
         return (self.chan.value, self.chan.voltage)
 
     def reset(self):

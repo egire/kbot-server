@@ -183,7 +183,10 @@ class login:
         i = web.input(username=None, password=None)
         user = users.login(i.username, i.password, ip)
         if user:
-            logging.info("Login: " + i.username + " (" + ip + ")")
+            if user["admin"]:
+                logging.info("Admin Login:" + i.username + "(" + ip + ")")
+            else:
+                logging.info("Login: " + i.username + " (" + ip + ")")
             return user
         else:
             logging.info("Bad Login: " + i.username + " (" + ip + ")")

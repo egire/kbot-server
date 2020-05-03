@@ -8,6 +8,7 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file
 gUltrasweep = None
+gAds = None
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -61,10 +62,22 @@ def Access_Sweep():
         head_pin = Access_Storage("HEAD")
         gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
 
-    if(gUltrasweep.state == 0):
+    if(gUltrasweep.state == False):
         gUltrasweep.on()
     else:
         gUltrasweep.off()
+    return ''
+
+def Access_Ads():
+    global gAds
+    if gAds is None:
+        ads_pin = Access_Storage("ADS2")
+        gAds = ads.ads("IRDISTANCE", 10, ads_pin);
+
+    if(gAds.state == False):
+        gAds.on()
+    else:
+        gAds.off()
     return ''
 
 def Access_Cam(name):
@@ -104,7 +117,8 @@ urls = (
     '/sensor', 'sensor',
     '/autonomous', 'autonomous',
     '/sweep', 'sweep',
-    '/cam', 'cam'
+    '/cam', 'cam',
+    '/ads', 'ads'
 )
 
 #webpages
@@ -228,12 +242,22 @@ class load:
 
 class sweep:
     def POST(self):
-        global gSweep
+        global gUltrasweep
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
         if users.isValidToken(i.username, i.token):
             Access_Sweep()
+        else: return ''
+
+class ads:
+    def POST(self):
+        global gAds
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None)
+        if users.isValidToken(i.username, i.token):
+            Access_Ads()
         else: return ''
 
 class switch:

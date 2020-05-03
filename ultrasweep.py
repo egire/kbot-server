@@ -37,7 +37,6 @@ class ultrasweep:
         starttime = time.time()
         endtime = time.time()
         distance = -1
-        print(pin)
 
         GPIO.setup(pin, GPIO.OUT)
         GPIO.output(pin, 0)

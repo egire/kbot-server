@@ -3,6 +3,8 @@ from adafruit_servokit import ServoKit
 from adafruit_motorkit import MotorKit
 import sensor
 import json
+import board
+import busio
 
 class pin:
     def __init__(self, name="pin1", pin_id=1, type="GPIO", state=0, mode="OUT", out_range=[0,1], in_range=[0,1]):
@@ -10,6 +12,7 @@ class pin:
         self.type = type
         self.mode = mode
         self.pin_id = int(pin_id)
+        self.i2c = None
         self.state = state
         self.out_range = out_range
         self.in_range = in_range
@@ -29,6 +32,8 @@ class pin:
             duty_min = 3
             PWM.start(self.pin_id, (100-duty_min), 60.0, 1)
             self.rotate(90)
+        elif (type == "I2C"):
+            self.i2c = busio.I2C(board.SCL, board.SDA)
         elif (type == "SERVO"):
             self.kit = ServoKit(channels=self.channels)
             self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)

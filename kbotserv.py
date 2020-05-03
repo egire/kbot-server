@@ -8,7 +8,7 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file
 gUltrasweep = None
-gAds = None
+gAds0, gAds1, gAds2, gAds3 = None
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -68,20 +68,54 @@ def Access_Sweep():
         gUltrasweep.off()
     return ''
 
-def Access_Ads():
-    global gAds
-    if gAds is None:
-        ads_pin = Access_Storage("ADS2")
-        gAds = ads1115.ads1115("IRDISTANCE", 10, ads_pin)
+def Access_Battery():
+    global gAds0
+    if gAds0 is None:
+        adsPin = Access_Storage("ADS0")
+        gAds0 = ads1115.battery("BATTERY", 10, adsPin)
 
-    if not gAds.state:
-        gAds.reset()
-        gAds.on()
+    if not gAds0.state:
+        gAds0.reset()
+        gAds0.on()
 
     sensorInput = None
     while sensorInput is None:
-        sensorInput = gAds.input()
-    
+        sensorInput = gAds0.input()
+
+    json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
+    return json
+
+def Access_Power():
+    global gAds1
+    if gAds1 is None:
+        adsPin = Access_Storage("ADS1")
+        gAds1 = ads1115.power("POWER", 10, adsPin)
+
+    if not gAds1.state:
+        gAds1.reset()
+        gAds1.on()
+
+    sensorInput = None
+    while sensorInput is None:
+        sensorInput = gAds1.input()
+
+    json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
+    return json
+
+def Access_Ir():
+    global gAds2
+    if gAds2 is None:
+        adsPin = Access_Storage("ADS2")
+        gAds2 = ads1115.irdistance("IRDISTANCE", 10, adsPin)
+
+    if not gAds2.state:
+        gAds2.reset()
+        gAds2.on()
+
+    sensorInput = None
+    while sensorInput is None:
+        sensorInput = gAds2.input()
+
     json = '{"x": ' + str(sensorInput[0]) + ', "y": ' + str(sensorInput[1]) + '}'
     return json
 
@@ -123,7 +157,9 @@ urls = (
     '/autonomous', 'autonomous',
     '/sweep', 'sweep',
     '/cam', 'cam',
-    '/ads', 'ads'
+    '/ir', 'ir',
+    '/battery' 'battery',
+    '/power', 'power'
 )
 
 #webpages
@@ -255,14 +291,34 @@ class sweep:
             Access_Sweep()
         else: return ''
 
-class ads:
+class battery:
     def POST(self):
-        global gAds
+        global gAds0
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
         if users.isValidToken(i.username, i.token):
-            return Access_Ads()
+            return Access_Battery()
+        else: return ''
+
+class power:
+    def POST(self):
+        global gAds1
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None)
+        if users.isValidToken(i.username, i.token):
+            return Access_Power()
+        else: return ''
+
+class ir:
+    def POST(self):
+        global gAds2
+        web.header('Content-Type','text/plain; charset=utf-8')
+        web.header('Access-Control-Allow-Origin', '*')
+        i = web.input(username=None, token=None)
+        if users.isValidToken(i.username, i.token):
+            return Access_Ir()
         else: return ''
 
 class switch:

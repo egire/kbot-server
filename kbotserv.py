@@ -184,7 +184,7 @@ class login:
         user = users.login(i.username, i.password, ip)
         if user:
             if user["admin"]:
-                logging.info("Admin Login:" + i.username + "(" + ip + ")")
+                logging.info("Admin Login: " + i.username + "(" + ip + ")")
             else:
                 logging.info("Login: " + i.username + " (" + ip + ")")
             return json.dumps(user)

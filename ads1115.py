@@ -5,7 +5,7 @@ from adafruit_ads1x15.analog_in import AnalogIn
 class ads1115:
     def __init__(self, name="ADS", memsize=10, pin=None):
         self.init = ADS.ADS1115(self.pin.i2c)
-        self.chan = AnalogIn(self.init, pinToAdsChannel(pin.pin_id))
+        self.chan = AnalogIn(self.init, pinToAdsChannel(self.pin.pin_id))
         self.irdistance = sensor(name, "I2C", 1, ads_pin, self.read)
         self.state = False
         self.pin = pin

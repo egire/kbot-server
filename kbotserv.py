@@ -72,7 +72,7 @@ def Access_Ads():
     global gAds
     if gAds is None:
         ads_pin = Access_Storage("ADS2")
-        gAds = ads.ads1115("IRDISTANCE", 10, ads_pin);
+        gAds = ads1115.ads1115("IRDISTANCE", 10, ads_pin);
 
     if(gAds.state == False):
         gAds.on()

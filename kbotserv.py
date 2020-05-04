@@ -1,5 +1,5 @@
 import web, json, csv, time, base64, logging
-import pin, users, ultrasweep, ads1115
+import pin, users, ultrasweep, ads1115, notify
 from cheroot.server import HTTPServer
 from cheroot.ssl.builtin import BuiltinSSLAdapter
 
@@ -73,6 +73,7 @@ def Access_Sweep():
 
 def Access_Battery():
     global gAds0
+
     if gAds0 is None:
         adsPin = Access_Storage("ADS0")
         gAds0 = ads1115.battery("BATTERY", 10, adsPin)
@@ -161,7 +162,7 @@ urls = (
     '/sweep', 'sweep',
     '/cam', 'cam',
     '/ir', 'ir',
-    '/battery' 'battery',
+    '/battery', 'battery',
     '/power', 'power'
 )
 
@@ -184,12 +185,15 @@ class login:
         user = users.login(i.username, i.password, ip)
         if user:
             if user["admin"]:
-                logging.info("Admin Login: " + i.username + "(" + ip + ")")
+                logging.info("Admin Login: " + i.username + " (" + ip + ")")
+                notify.SendEmail("Admin Login: " + i.username, "User " + i.username + " has logged in from " + ip)
             else:
-                logging.info("Login: " + i.username + " (" + ip + ")")
+                logging.info("User Login: " + i.username + " (" + ip + ")")
+                notify.SendEmail("User Login: " + i.username, "User " + i.username + " has logged in from " + ip)
             return json.dumps(user)
         else:
-            logging.info("Bad Login: " + i.username + " (" + ip + ")")
+            logging.info("Security - Bad Login: " + i.username + " (" + ip + ")")
+            notify.SendEmail("Security - Bad Login: " + i.username, "User " + i.username + " has attempted to login from " + ip)
             return ''
 
 class register:
@@ -299,7 +303,6 @@ class sweep:
 
 class battery:
     def POST(self):
-        global gAds0
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
@@ -309,7 +312,6 @@ class battery:
 
 class power:
     def POST(self):
-        global gAds1
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)
@@ -319,7 +321,6 @@ class power:
 
 class ir:
     def POST(self):
-        global gAds2
         web.header('Content-Type','text/plain; charset=utf-8')
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None)

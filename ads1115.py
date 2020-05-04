@@ -50,7 +50,9 @@ class battery(ads1115):
         now = time.time()
 
         x = float(self.chan.voltage)
-        capacity = 41.67*x -250.0
+        print(x)
+        capacity = 41.67*x - 250.0
+        if capacity < 0: capacity = 0
         return now, capacity
 
 class power(ads1115):
@@ -59,11 +61,11 @@ class power(ads1115):
         # 5.1 VDC Nominal
         # 4.75 VDC Low Warning
 
-
         now = time.time()
 
         x = float(self.chan.voltage)
         voltage = 285.71*x - 1357.14
+        if voltage < 0: voltage = 0
         return now, voltage
 
 def pinToAdsChannel(pin):

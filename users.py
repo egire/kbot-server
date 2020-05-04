@@ -98,6 +98,9 @@ def isAdmin(username):
     else:
         return False
 
+def getAdmins():
+    return where("admin=1")
+
 def getPassword(username):
     return getUser(username)["password"]
 
@@ -133,6 +136,24 @@ def initDB():
             writer = csv.DictWriter(csvfile, fieldnames=schema)
             writer.writeheader()
 
+
+def where(clause=""):
+    initDB()
+    global schema
+    wheretok = str.split(clause, "=")
+    field = wheretok[0]
+    value = wheretok[1]
+    results = []
+
+    with open('users.db', 'r', newline='\n') as csvfile:
+        reader = csv.DictReader(csvfile, fieldnames=schema)
+        for row in reader:
+            if row[field] == value:
+                del(row["salt"])
+                del(row["token"])
+                del(row["password"])
+                results.append(row)
+        return results
 
 def create(username, password, email, admin):
     initDB()

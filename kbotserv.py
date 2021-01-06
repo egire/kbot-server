@@ -1,5 +1,6 @@
 import web, json, csv, time, base64, logging
-import pin, users, ultrasweep, ads1115, notify
+import pin, users, ultrasonic, ads1115
+import notification
 from cheroot.server import HTTPServer
 from cheroot.ssl.builtin import BuiltinSSLAdapter
 
@@ -7,11 +8,12 @@ logging.basicConfig(filename='kbot.log', format='%(asctime)s %(message)s', datef
 
 gStorage = {} # memory storage
 gPinConfig = "pins.cfg" # pin config file
-gUltrasweep = None
+gUltrasonic = None
 gAds0 = None
 gAds1 = None
 gAds2 = None
 gAds3 = None
+gSpeed = 0
 
 def savePinConfig():
     with open(gPinConfig, 'w', newline='') as csvfile:
@@ -29,17 +31,18 @@ def loadPinConfig():
             in_range = [float(row['in_min']), float(row['in_max'])]
             Access_Create(row['name'], row['pin'], row['type'], row['state'], row['mode'], out_range, in_range)
 
-def Access_Create(pin_name, pin_id, type, state, mode, out_range, in_range):
-    gStorage[pin_name] = pin.pin(pin_name, pin_id, type, state, mode, out_range, in_range)
+def Access_Create(pinName, pinId, type, state, mode, outRange, inRange):
+    global gStorage
+    gStorage[pinName] = pin.pin(pinName, pinId, type, state, mode, outRange, inRange)
 
-def Access_Name(pin_name):
-    return gStorage[pin_name].name
+def Access_Name(pinName):
+    return gStorage[pinName].name
 
-def Access_Storage(pin_name):
-    return gStorage[pin_name]
+def Access_Storage(pinName):
+    return gStorage[pinName]
 
-def Access_Delete(pin_name):
-    gStorage.pop(pin_name)
+def Access_Delete(pinName):
+    gStorage.pop(pinName)
 
 def Access_Store():
     return gStorage
@@ -52,23 +55,41 @@ def Access_Load():
         loadPinConfig()
 
 def Access_Move(leftFore, rightFore, leftAft, rightAft):
-    gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
+    try:
+        gStorage['MOTOR'].move(leftFore, rightFore, leftAft, rightAft)
+    except:
+        print("Error: Accessing move function or storage failure. Loading storage.")
+        Access_Load()
+
+def Access_Rotate(name, angle):
+    try:
+        servo = Access_Storage(name)
+        print("{}, {}".format(name, angle))
+        servo.rotate(float(angle))
+    except:
+        print("Error: Accessing rotate function or storage failure. Loading storage.")
+        Access_Load()
 
 def Access_Sensor(name):
-    sensor = (Access_Storage(name)).sensor
-    return sensor
+    try:
+        sensor = (Access_Storage(name)).sensor
+        return sensor
+    except:
+        print("Error: Accessing sensor function or storage failure. Loading storage.")
+        Access_Load()
+        sensor = (Access_Storage(name)).sensor
+        return sensor
 
 def Access_Sweep():
-    global gUltrasweep
-    if gUltrasweep is None:
-        ping_pin = Access_Storage("PING")
-        head_pin = Access_Storage("HEAD")
-        gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 10, ping_pin, head_pin);
+    global gUltrasonic
+    if gUltrasonic is None:
+        ultrasonicPin = Access_Storage("ULTRASONIC")
+        gUltrasonic = ultrasonic.ultrasonic("ULTRASONIC", 10, ultrasonicPin);
 
-    if(gUltrasweep.state == False):
-        gUltrasweep.on()
+    if(gUltrasonic.state == False):
+        gUltrasonic.on()
     else:
-        gUltrasweep.off()
+        gUltrasonic.off()
     return ''
 
 def Access_Battery():
@@ -125,10 +146,13 @@ def Access_Ir():
 
 def Access_Cam(name):
     # config file dict of cams, map name to cam
-    with open("/dev/shm/mjpeg/cam.jpg", 'rb') as f:
-        data = f.read()
-        encoded = "data:image/png;base64,"+str(base64.b64encode(data).decode('ascii'))
-        return encoded
+    try:
+        with open("/dev/shm/mjpeg/cam.jpg", 'rb') as f:
+            data = f.read()
+            encoded = "data:image/png;base64,"+str(base64.b64encode(data).decode('ascii'))
+            return encoded
+    except:
+        return ""
 
 def Access_Autonomous():
     return ''
@@ -136,13 +160,16 @@ def Access_Autonomous():
 def Access_Log(tail=True, maxlines=10):
     log = []
     data = ""
-    with open('kbot.log') as file:
-        if (tail == "True" or tail == True):
-            log = file.readlines()[-1]
-            data = "<br>".join(log)
-        else:
-            log = file.readlines()[-maxlines:]
-            data = "<br>".join(log)
+    try:
+        with open('kbot.log') as file:
+            if (tail == "True" or tail == True):
+                log = file.readlines()[-1]
+                data = "<br>".join(log)
+            else:
+                log = file.readlines()[-maxlines:]
+                data = "<br>".join(log)
+    except:
+        data = "Data file not loading."
     return data
 
 urls = (
@@ -186,14 +213,15 @@ class login:
         if user:
             if user["admin"]:
                 logging.info("Admin Login: " + i.username + " (" + ip + ")")
-                notify.SendEmail("Admin Login: " + i.username, "User " + i.username + " has logged in from " + ip)
+                notification.SendEmail("Admin Login: " + i.username, "User " + i.username + " has logged in from " + ip)
+                #notification.SendDiscord("User " + i.username + " has logged in")
             else:
                 logging.info("User Login: " + i.username + " (" + ip + ")")
-                notify.SendEmail("User Login: " + i.username, "User " + i.username + " has logged in from " + ip)
+                notification.SendEmail("User Login: " + i.username, "User " + i.username + " has logged in from " + ip)
             return json.dumps(user)
         else:
             logging.info("Security - Bad Login: " + i.username + " (" + ip + ")")
-            notify.SendEmail("Security - Bad Login: " + i.username, "User " + i.username + " has attempted to login from " + ip)
+            notification.SendEmail("Security - Bad Login: " + i.username, "User " + i.username + " has attempted to login from " + ip)
             return ''
 
 class register:
@@ -248,8 +276,7 @@ class rotate:
         web.header('Access-Control-Allow-Origin', '*')
         i = web.input(username=None, token=None, name=None, angle=None)
         if users.isValidToken(i.username, i.token):
-            servo = Access_Storage(i.name)
-            servo.rotate(float(i.angle))
+            Access_Rotate(i.name, i.angle)
         else: return ''
 
 class sensor:
@@ -259,13 +286,12 @@ class sensor:
         i = web.input(username=None, token=None, name=None)
         if users.isValidToken(i.username, i.token):
             sensor = None
-            if i.name == "ULTRASWEEP":
-                global gUltrasweep
-                if gUltrasweep is None:
-                    ping_pin = Access_Storage("PING")
-                    head_pin = Access_Storage("HEAD")
-                    gUltrasweep = ultrasweep.ultrasweep("ULTRASWEEP", 1, ping_pin, head_pin)
-                sensor = gUltrasweep
+            if i.name == "ULTRASONIC":
+                global gUltrasonic
+                if gUltrasonic is None:
+                    ultrasonicPin = Access_Storage("ULTRASONIC")
+                    gUltrasonic = ultrasonic.ultrasonic("ULTRASONIC", 1, ultrasonicPin)
+                sensor = gUltrasonic
             else:
                 sensor = Access_Sensor(i.name)
 
@@ -394,7 +420,12 @@ class storage:
 
 if __name__ == "__main__":
     # web.config.debug = False
+    loadPinConfig()
+
     HTTPServer.ssl_adapter = BuiltinSSLAdapter("/home/pi/kbot.cert",
                                                "/home/pi/kbot.key")
     app = web.application(urls, globals())
-    app.run()
+    try:
+        app.run()
+    except:
+        print("Error: Error with webserver.")

@@ -39,12 +39,12 @@ class pin:
             self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
         elif (type == "MOTOR"):
             self.kit = MotorKit()
-        elif (type == "SONIC"):
-            self.sensor = sensor.sensor(self.name, self.type, 1, [self.pin_id])
-        elif (type == "SWEEP"):
-            self.kit = ServoKit(channels=self.channels)
-            self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
-            self.sensor = sensor.sensor(self.name, self.type, 1, self)
+        elif (type == "ULTRASONIC"):
+            self.sensor = sensor.sensor(self.name, self.type, 10, self.pin_id)
+        # elif (type == "SWEEP"):
+        #     self.kit = ServoKit(channels=self.channels)
+        #     self.kit.servo[int(self.pin_id)].set_pulse_width_range(0, 3000)
+        #     self.sensor = sensor.sensor(self.name, self.type, 1, self)
 
 
     def output(self, state):
@@ -86,15 +86,19 @@ class pin:
             PWM.set_duty_cycle(self.pin_id, duty)
             self.state = angle_f
         elif(self.type == "SERVO" or self.type == "SWEEP"):
+            print(angle)
             self.kit.servo[int(self.pin_id)].angle = angle
 
 
     def move(self, leftFore, rightFore, leftAft, rightAft):
         if(self.type == "MOTOR"):
-            self.kit.motor1.throttle = self.clamp(leftFore)  #Left Fore
-            self.kit.motor3.throttle = self.clamp(rightFore) #Right Fore
-            self.kit.motor2.throttle = self.clamp(leftAft)   #Left Aft
-            self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft
+            try:
+                self.kit.motor1.throttle = self.clamp(leftFore)  #Left Fore
+                self.kit.motor3.throttle = self.clamp(rightFore) #Right Fore
+                self.kit.motor2.throttle = self.clamp(leftAft)   #Left Aft
+                self.kit.motor4.throttle = self.clamp(rightAft)  #Right Aft
+            except:
+                print("Error setting throttle.")
 
 
     def stop(self):

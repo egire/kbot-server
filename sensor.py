@@ -1,7 +1,7 @@
 import queue, threading
 
 class sensor:
-    def __init__(self, name="Sensor", type="SONIC", memsize=10, pin=None, outf=None, inf=None):
+    def __init__(self, name="Sensor", type="ULTRASONIC", memsize=10, pin=None, outf=None, inf=None):
         self.name = name
         self.type = type
         self.pin = pin

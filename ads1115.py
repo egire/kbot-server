@@ -41,31 +41,36 @@ class irdistance(ads1115):
         distance = -16.747*x + 61.964
         return now, distance
 
+
 class battery(ads1115):
     def read(self):
         if not self.state: return
-        # 8.4 VDC = FULL (100%)
-        # 6 VDC = EMPTY (0%)
+        # 8.4 VDC = FULL (100%) -> 3.3 volts ADS
+        # 5 VDC = EMPTY (0%) ->  1.96 volts ADS
 
         now = time.time()
 
-        x = float(self.chan.voltage)
-        print(x)
-        capacity = 41.67*x - 250.0
-        if capacity < 0: capacity = 0
+        try:
+            x = float(self.chan.voltage)
+            capacity = 74.626*x -146.268
+        except:
+            capacity = 0
+            
         return now, capacity
 
 class power(ads1115):
     def read(self):
         if not self.state: return
-        # 5.1 VDC Nominal
-        # 4.75 VDC Low Warning
+        # 5.1 VDC Nominal 2.76 -> x/100 = 4.75/5.1
+        # 4.75 VDC Low Warning 2.57
 
         now = time.time()
+        try:
+            x = float(self.chan.voltage)
+            voltage = 526.32*x - 1352.63
+        except:
+            voltage = 0
 
-        x = float(self.chan.voltage)
-        voltage = 285.71*x - 1357.14
-        if voltage < 0: voltage = 0
         return now, voltage
 
 def pinToAdsChannel(pin):

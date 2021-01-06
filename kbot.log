@@ -285,3 +285,274 @@
 05/04/2020 04:00:13 PM Admin Login: eric (70.32.0.114)
 05/04/2020 04:00:14 PM Admin Login: eric (70.32.0.114)
 05/04/2020 04:00:16 PM Admin Login: eric (70.32.0.114)
+05/04/2020 04:07:23 PM Admin Login: eric (70.32.0.114)
+05/04/2020 05:20:32 PM Admin Login: eric (70.32.0.24)
+05/04/2020 09:35:30 PM Admin Login: eric (199.116.115.139)
+05/04/2020 10:52:50 PM Admin Login: eric (199.116.115.139)
+05/05/2020 08:17:24 PM Admin Login: eric (73.72.72.182)
+05/05/2020 08:17:26 PM Admin Login: eric (73.72.72.182)
+05/05/2020 08:17:29 PM Admin Login: eric (73.72.72.182)
+05/05/2020 08:17:30 PM Admin Login: eric (73.72.72.182)
+05/05/2020 08:18:14 PM Admin Login: eric (73.72.72.182)
+05/05/2020 09:36:00 PM Admin Login: eric (73.72.72.182)
+05/05/2020 10:07:10 PM Admin Login: eric (73.72.72.182)
+05/06/2020 09:06:23 AM Admin Login: eric (73.72.72.182)
+05/06/2020 10:53:45 AM Admin Login: eric (73.72.72.182)
+05/06/2020 10:55:08 AM Admin Login: eric (73.72.72.182)
+05/06/2020 12:53:38 PM Admin Login: eric (73.72.72.182)
+05/06/2020 12:55:24 PM Admin Login: eric (73.72.72.182)
+05/06/2020 12:56:03 PM Admin Login: eric (73.72.72.182)
+05/06/2020 12:57:54 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:04:42 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:05:53 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:24:43 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:24:58 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:41:13 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:44:54 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:58:05 PM Admin Login: eric (73.72.72.182)
+05/06/2020 01:59:04 PM Admin Login: eric (73.72.72.182)
+05/06/2020 02:00:53 PM Admin Login: eric (73.72.72.182)
+05/06/2020 02:00:57 PM Admin Login: eric (73.72.72.182)
+05/06/2020 02:15:58 PM PyNaCl is not installed, voice will NOT be supported
+05/06/2020 02:15:58 PM logging in using static token
+05/06/2020 02:15:59 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 02:15:59 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 02:15:59 PM Shard ID None has connected to Gateway: ["gateway-prd-main-7clg",{"micros":138977,"calls":["discord-sessions-prd-1-13",{"micros":127187,"calls":["start_session",{"micros":124312,"calls":["api-prd-main-us-east1-1r9v",{"micros":114819,"calls":["get_user",{"micros":9551},"add_authorized_ip",{"micros":17310},"get_guilds",{"micros":6906},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":3,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: e6ba18d4499204f9a16233892e5c02de).
+05/06/2020 02:15:59 PM GUILD_MEMBER_UPDATE referencing an unknown member ID: 707656720649945221. Discarding.
+05/06/2020 02:17:20 PM Cleaning up tasks.
+05/06/2020 02:17:20 PM Cleaning up after 4 tasks.
+05/06/2020 02:17:20 PM Closing the event loop.
+05/06/2020 07:53:04 PM Admin Login: eric (199.116.115.140)
+05/06/2020 07:58:01 PM Admin Login: eric (199.116.115.140)
+05/06/2020 08:00:53 PM Admin Login: eric (199.116.115.140)
+05/06/2020 08:26:38 PM Admin Login: eric (199.116.115.140)
+05/06/2020 08:28:14 PM Admin Login: eric (199.116.115.140)
+05/06/2020 08:28:58 PM Admin Login: eric (199.116.115.140)
+05/06/2020 08:55:25 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 08:55:25 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 08:55:26 PM Shard ID None has connected to Gateway: ["gateway-prd-main-snwh",{"micros":47471,"calls":["discord-sessions-prd-1-51",{"micros":44641,"calls":["start_session",{"micros":42659,"calls":["api-prd-main-us-east1-2z2k",{"micros":40165,"calls":["get_user",{"micros":8981},"add_authorized_ip",{"micros":3005},"get_guilds",{"micros":2836},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 557c8e1d4c483bb3d0d13ac05f0cb942).
+05/06/2020 09:13:42 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:13:42 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:13:42 PM Shard ID None has connected to Gateway: ["gateway-prd-main-70k9",{"micros":78076,"calls":["discord-sessions-prd-1-39",{"micros":71464,"calls":["start_session",{"micros":67631,"calls":["api-prd-main-us-east1-9bxz",{"micros":63502,"calls":["get_user",{"micros":7869},"add_authorized_ip",{"micros":3654},"get_guilds",{"micros":8140},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":811,"calls":[]}]}]}] (Session ID: 9f570926868ebcac18bd23c2e5786d8f).
+05/06/2020 09:14:48 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:14:48 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:14:48 PM Shard ID None has connected to Gateway: ["gateway-prd-main-709c",{"micros":106640,"calls":["discord-sessions-prd-1-68",{"micros":104077,"calls":["start_session",{"micros":97253,"calls":["api-prd-main-us-east1-rf0k",{"micros":93534,"calls":["get_user",{"micros":5096},"add_authorized_ip",{"micros":7923},"get_guilds",{"micros":6364},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 830376ff6b18498fe922cfc271aa4d63).
+05/06/2020 09:15:08 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:15:38 PM Shard ID None has connected to Gateway: ["gateway-prd-main-d6cd",{"micros":52293,"calls":["discord-sessions-prd-1-74",{"micros":49238,"calls":["start_session",{"micros":42322,"calls":["api-prd-main-us-east1-tr6d",{"micros":38173,"calls":["get_user",{"micros":2470},"add_authorized_ip",{"micros":2606},"get_guilds",{"micros":3777},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 7e03229a82028685477fdd8e0d256e17).
+05/06/2020 09:15:45 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:16:27 PM Shard ID None has connected to Gateway: ["gateway-prd-main-r7pf",{"micros":64546,"calls":["discord-sessions-prd-1-51",{"micros":59285,"calls":["start_session",{"micros":54951,"calls":["api-prd-main-us-east1-qfj2",{"micros":50486,"calls":["get_user",{"micros":6224},"add_authorized_ip",{"micros":6517},"get_guilds",{"micros":1741},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":385,"calls":[]}]}]}] (Session ID: 55baee7f3d726a6e6f481cb114749c83).
+05/06/2020 09:16:34 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:16:56 PM Shard ID None has connected to Gateway: ["gateway-prd-main-tflr",{"micros":39145,"calls":["discord-sessions-prd-1-26",{"micros":34499,"calls":["start_session",{"micros":32803,"calls":["api-prd-main-us-east1-ztr0",{"micros":29326,"calls":["get_user",{"micros":2672},"add_authorized_ip",{"micros":1814},"get_guilds",{"micros":1566},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":0,"calls":[]}]}]}] (Session ID: e4f4f2872831e798bd5219a5ea610c43).
+05/06/2020 09:17:09 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:17:25 PM Shard ID None has connected to Gateway: ["gateway-prd-main-qs9f",{"micros":54933,"calls":["discord-sessions-prd-1-7",{"micros":53132,"calls":["start_session",{"micros":52060,"calls":["api-prd-main-us-east1-80gs",{"micros":45152,"calls":["get_user",{"micros":3794},"add_authorized_ip",{"micros":4845},"get_guilds",{"micros":1506},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":3,"calls":[]},"presence_connect",{"micros":367,"calls":[]}]}]}] (Session ID: a558bc2b0c4ba38d15da670666b90a18).
+05/06/2020 09:18:23 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:18:23 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:18:23 PM Shard ID None has connected to Gateway: ["gateway-prd-main-psjz",{"micros":66739,"calls":["discord-sessions-prd-1-66",{"micros":64127,"calls":["start_session",{"micros":59177,"calls":["api-prd-main-us-east1-z1tz",{"micros":55479,"calls":["get_user",{"micros":2468},"add_authorized_ip",{"micros":2666},"get_guilds",{"micros":1532},"coros_wait",{"micros":0}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":3087,"calls":[]}]}]}] (Session ID: 90b77adc40ce628c5c625b78c36dd2c3).
+05/06/2020 09:19:29 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:19:29 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:19:29 PM Shard ID None has connected to Gateway: ["gateway-prd-main-jd5k",{"micros":44772,"calls":["discord-sessions-prd-1-32",{"micros":42399,"calls":["start_session",{"micros":40367,"calls":["api-prd-main-us-east1-l2mp",{"micros":37407,"calls":["get_user",{"micros":2744},"add_authorized_ip",{"micros":1629},"get_guilds",{"micros":1631},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1058,"calls":[]}]}]}] (Session ID: 591cd8c6abe032710bfffb2d51375474).
+05/06/2020 09:20:15 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:20:21 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:20:21 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:20:21 PM Shard ID None has connected to Gateway: ["gateway-prd-main-wwmt",{"micros":71394,"calls":["discord-sessions-prd-1-9",{"micros":69214,"calls":["start_session",{"micros":66423,"calls":["api-prd-main-us-east1-02x6",{"micros":61107,"calls":["get_user",{"micros":11076},"add_authorized_ip",{"micros":3643},"get_guilds",{"micros":4888},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 4e14c99b75dfc814d2d326a072b9dcac).
+05/06/2020 09:20:37 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:20:47 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:21:07 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:21:12 PM Heartbeat blocked for more than 10 seconds.
+05/06/2020 09:21:16 PM Shard ID None has connected to Gateway: ["gateway-prd-main-hmll",{"micros":58873,"calls":["discord-sessions-prd-1-50",{"micros":53236,"calls":["start_session",{"micros":51181,"calls":["api-prd-main-us-east1-2869",{"micros":46097,"calls":["get_user",{"micros":4499},"add_authorized_ip",{"micros":3422},"get_guilds",{"micros":3051},"coros_wait",{"micros":3}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 75ef8126256ae00001607906a337edbd).
+05/06/2020 09:21:34 PM Shard ID None has connected to Gateway: ["gateway-prd-main-mx41",{"micros":43168,"calls":["discord-sessions-prd-1-63",{"micros":41259,"calls":["start_session",{"micros":39444,"calls":["api-prd-main-us-east1-4j84",{"micros":35906,"calls":["get_user",{"micros":2216},"add_authorized_ip",{"micros":4730},"get_guilds",{"micros":3529},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":978,"calls":[]}]}]}] (Session ID: 9ebd71c4773874ff7f66dfe24a28a317).
+05/06/2020 09:21:48 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:22:09 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:22:09 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:22:09 PM Shard ID None has connected to Gateway: ["gateway-prd-main-hmll",{"micros":72556,"calls":["discord-sessions-prd-1-47",{"micros":70847,"calls":["start_session",{"micros":65510,"calls":["api-prd-main-us-east1-tzl3",{"micros":62570,"calls":["get_user",{"micros":2460},"add_authorized_ip",{"micros":6410},"get_guilds",{"micros":1732},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":0,"calls":[]}]}]}] (Session ID: 318c4e7ae099f8d6a2db13748f128035).
+05/06/2020 09:22:58 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:23:15 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:25:56 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:25:56 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:25:56 PM Shard ID None has connected to Gateway: ["gateway-prd-main-k5hk",{"micros":64026,"calls":["discord-sessions-prd-1-48",{"micros":59952,"calls":["start_session",{"micros":58340,"calls":["api-prd-main-us-east1-jfm8",{"micros":55558,"calls":["get_user",{"micros":5765},"add_authorized_ip",{"micros":4431},"get_guilds",{"micros":7993},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 5f6c8420e08fa24d6bf0527db6ae631b).
+05/06/2020 09:26:18 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:26:31 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:27:24 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:27:44 PM Shard ID None has connected to Gateway: ["gateway-prd-main-q460",{"micros":73206,"calls":["discord-sessions-prd-1-48",{"micros":61838,"calls":["start_session",{"micros":57487,"calls":["api-prd-main-us-east1-jqmv",{"micros":54139,"calls":["get_user",{"micros":3550},"add_authorized_ip",{"micros":1469},"get_guilds",{"micros":3966},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1290,"calls":[]}]}]}] (Session ID: 2c1d621fcb4c9a737515617ed35ca20f).
+05/06/2020 09:27:52 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:28:30 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:28:35 PM Heartbeat blocked for more than 10 seconds.
+05/06/2020 09:29:09 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:29:09 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:29:09 PM Shard ID None has connected to Gateway: ["gateway-prd-main-9mxk",{"micros":88680,"calls":["discord-sessions-prd-1-6",{"micros":87554,"calls":["start_session",{"micros":82984,"calls":["api-prd-main-us-east1-lkpp",{"micros":80231,"calls":["get_user",{"micros":5771},"add_authorized_ip",{"micros":1910},"get_guilds",{"micros":13340},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":2822,"calls":[]}]}]}] (Session ID: f8c25f2f0b8e03b6bcc9fd59fa209f9d).
+05/06/2020 09:29:15 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:29:19 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:29:32 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:29:51 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:29:51 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:29:51 PM Shard ID None has connected to Gateway: ["gateway-prd-main-3twm",{"micros":34503,"calls":["discord-sessions-prd-1-28",{"micros":33059,"calls":["start_session",{"micros":31102,"calls":["api-prd-main-us-east1-3v54",{"micros":28510,"calls":["get_user",{"micros":3011},"add_authorized_ip",{"micros":1452},"get_guilds",{"micros":1541},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":484,"calls":[]}]}]}] (Session ID: 2e77b3102053029706ab11ea5b53b57f).
+05/06/2020 09:29:54 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:30:37 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:30:42 PM Heartbeat blocked for more than 10 seconds.
+05/06/2020 09:30:48 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:30:48 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:30:48 PM Shard ID None has connected to Gateway: ["gateway-prd-main-g3w2",{"micros":59271,"calls":["discord-sessions-prd-1-33",{"micros":53051,"calls":["start_session",{"micros":49718,"calls":["api-prd-main-us-east1-lkpp",{"micros":45249,"calls":["get_user",{"micros":3702},"add_authorized_ip",{"micros":5729},"get_guilds",{"micros":3458},"coros_wait",{"micros":0}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":2161,"calls":[]}]}]}] (Session ID: f647c5490efd02a577ea0bb65ed19de8).
+05/06/2020 09:30:50 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:31:00 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:31:34 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:31:39 PM Heartbeat blocked for more than 10 seconds.
+05/06/2020 09:31:44 PM Heartbeat blocked for more than 15 seconds.
+05/06/2020 09:31:49 PM Heartbeat blocked for more than 20 seconds.
+05/06/2020 09:31:54 PM Heartbeat blocked for more than 25 seconds.
+05/06/2020 09:31:59 PM Heartbeat blocked for more than 30 seconds.
+05/06/2020 09:32:04 PM Heartbeat blocked for more than 35 seconds.
+05/06/2020 09:32:09 PM Heartbeat blocked for more than 40 seconds.
+05/06/2020 09:32:14 PM Heartbeat blocked for more than 45 seconds.
+05/06/2020 09:32:19 PM Heartbeat blocked for more than 50 seconds.
+05/06/2020 09:32:24 PM Heartbeat blocked for more than 55 seconds.
+05/06/2020 09:32:29 PM Heartbeat blocked for more than 60 seconds.
+05/06/2020 09:32:34 PM Heartbeat blocked for more than 65 seconds.
+05/06/2020 09:32:39 PM Heartbeat blocked for more than 70 seconds.
+05/06/2020 09:32:44 PM Heartbeat blocked for more than 75 seconds.
+05/06/2020 09:32:49 PM Heartbeat blocked for more than 80 seconds.
+05/06/2020 09:32:54 PM Heartbeat blocked for more than 85 seconds.
+05/06/2020 09:32:59 PM Heartbeat blocked for more than 90 seconds.
+05/06/2020 09:33:04 PM Heartbeat blocked for more than 95 seconds.
+05/06/2020 09:33:09 PM Heartbeat blocked for more than 100 seconds.
+05/06/2020 09:33:14 PM Heartbeat blocked for more than 105 seconds.
+05/06/2020 09:33:19 PM Heartbeat blocked for more than 110 seconds.
+05/06/2020 09:33:24 PM Heartbeat blocked for more than 115 seconds.
+05/06/2020 09:33:29 PM Heartbeat blocked for more than 120 seconds.
+05/06/2020 09:33:34 PM Heartbeat blocked for more than 125 seconds.
+05/06/2020 09:33:39 PM Heartbeat blocked for more than 130 seconds.
+05/06/2020 09:33:44 PM Heartbeat blocked for more than 135 seconds.
+05/06/2020 09:33:49 PM Heartbeat blocked for more than 140 seconds.
+05/06/2020 09:33:54 PM Heartbeat blocked for more than 145 seconds.
+05/06/2020 09:33:59 PM Heartbeat blocked for more than 150 seconds.
+05/06/2020 09:34:04 PM Heartbeat blocked for more than 155 seconds.
+05/06/2020 09:34:09 PM Heartbeat blocked for more than 160 seconds.
+05/06/2020 09:34:14 PM Heartbeat blocked for more than 165 seconds.
+05/06/2020 09:34:19 PM Heartbeat blocked for more than 170 seconds.
+05/06/2020 09:34:24 PM Heartbeat blocked for more than 175 seconds.
+05/06/2020 09:34:29 PM Heartbeat blocked for more than 180 seconds.
+05/06/2020 09:34:34 PM Heartbeat blocked for more than 185 seconds.
+05/06/2020 09:34:39 PM Heartbeat blocked for more than 190 seconds.
+05/06/2020 09:34:44 PM Heartbeat blocked for more than 195 seconds.
+05/06/2020 09:34:49 PM Heartbeat blocked for more than 200 seconds.
+05/06/2020 09:34:54 PM Heartbeat blocked for more than 205 seconds.
+05/06/2020 09:34:59 PM Heartbeat blocked for more than 210 seconds.
+05/06/2020 09:35:04 PM Heartbeat blocked for more than 215 seconds.
+05/06/2020 09:35:09 PM Heartbeat blocked for more than 220 seconds.
+05/06/2020 09:35:13 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:35:13 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:35:13 PM Shard ID None has connected to Gateway: ["gateway-prd-main-vdw7",{"micros":45266,"calls":["discord-sessions-prd-1-53",{"micros":40487,"calls":["start_session",{"micros":37057,"calls":["api-prd-main-us-east1-43m3",{"micros":33799,"calls":["get_user",{"micros":7793},"add_authorized_ip",{"micros":1570},"get_guilds",{"micros":4414},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":2627,"calls":[]}]}]}] (Session ID: e1e15acec10be743c0bb631c09a691e1).
+05/06/2020 09:36:06 PM Shard ID None has connected to Gateway: ["gateway-prd-main-5p6m",{"micros":64885,"calls":["discord-sessions-prd-1-35",{"micros":57082,"calls":["start_session",{"micros":54826,"calls":["api-prd-main-us-east1-slwj",{"micros":51927,"calls":["get_user",{"micros":2765},"add_authorized_ip",{"micros":2076},"get_guilds",{"micros":3664},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 5285f0341a497e2779dfad9ea92eff79).
+05/06/2020 09:40:46 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:40:46 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:40:46 PM Shard ID None has connected to Gateway: ["gateway-prd-main-r4v8",{"micros":72766,"calls":["discord-sessions-prd-1-20",{"micros":66301,"calls":["start_session",{"micros":61742,"calls":["api-prd-main-us-east1-nq68",{"micros":57829,"calls":["get_user",{"micros":9440},"add_authorized_ip",{"micros":1932},"get_guilds",{"micros":3751},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":0,"calls":[]}]}]}] (Session ID: ac8d9d71c1ae91f873993a95df0f38d6).
+05/06/2020 09:40:54 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:41:32 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:41:37 PM Heartbeat blocked for more than 10 seconds.
+05/06/2020 09:41:42 PM Heartbeat blocked for more than 15 seconds.
+05/06/2020 09:41:47 PM Heartbeat blocked for more than 20 seconds.
+05/06/2020 09:41:52 PM Heartbeat blocked for more than 25 seconds.
+05/06/2020 09:45:12 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:45:12 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:45:13 PM Shard ID None has connected to Gateway: ["gateway-prd-main-w3qv",{"micros":61351,"calls":["discord-sessions-prd-1-5",{"micros":54803,"calls":["start_session",{"micros":49438,"calls":["api-prd-main-us-east1-dd51",{"micros":47136,"calls":["get_user",{"micros":3054},"add_authorized_ip",{"micros":2542},"get_guilds",{"micros":6181},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 026d3f2179df7dd67243445cb8ac07c4).
+05/06/2020 09:46:12 PM Shard ID None has connected to Gateway: ["gateway-prd-main-2v0r",{"micros":74239,"calls":["discord-sessions-prd-1-62",{"micros":71783,"calls":["start_session",{"micros":70634,"calls":["api-prd-main-us-east1-7z9s",{"micros":67861,"calls":["get_user",{"micros":2941},"add_authorized_ip",{"micros":4879},"get_guilds",{"micros":7158},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":421,"calls":[]}]}]}] (Session ID: 0bd3effd0a06b9cc981383e7919a0358).
+05/06/2020 09:46:37 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:46:37 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:46:37 PM Shard ID None has connected to Gateway: ["gateway-prd-main-zb70",{"micros":88159,"calls":["discord-sessions-prd-1-65",{"micros":86324,"calls":["start_session",{"micros":77999,"calls":["api-prd-main-us-east1-zvbz",{"micros":73477,"calls":["get_user",{"micros":7574},"add_authorized_ip",{"micros":3277},"get_guilds",{"micros":6434},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: c7ea1b55709852c75e997c98305e473c).
+05/06/2020 09:46:53 PM Shard ID None has connected to Gateway: ["gateway-prd-main-ngfx",{"micros":77175,"calls":["discord-sessions-prd-1-15",{"micros":72125,"calls":["start_session",{"micros":68014,"calls":["api-prd-main-us-east1-s6q6",{"micros":65314,"calls":["get_user",{"micros":2615},"add_authorized_ip",{"micros":3614},"get_guilds",{"micros":5202},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: 6e92a45136cac2963e69e72ed1592e9a).
+05/06/2020 09:47:27 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:47:27 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:47:28 PM Shard ID None has connected to Gateway: ["gateway-prd-main-ktm3",{"micros":59682,"calls":["discord-sessions-prd-1-74",{"micros":56431,"calls":["start_session",{"micros":54844,"calls":["api-prd-main-us-east1-t6st",{"micros":49433,"calls":["get_user",{"micros":3214},"add_authorized_ip",{"micros":3236},"get_guilds",{"micros":6764},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":694,"calls":[]}]}]}] (Session ID: 8c9b363089ac62c3260e11d25eb9b9b7).
+05/06/2020 09:49:09 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:49:09 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:49:10 PM Shard ID None has connected to Gateway: ["gateway-prd-main-7b5g",{"micros":93226,"calls":["discord-sessions-prd-1-79",{"micros":72346,"calls":["start_session",{"micros":70048,"calls":["api-prd-main-us-east1-gq5n",{"micros":65284,"calls":["get_user",{"micros":5250},"add_authorized_ip",{"micros":2683},"get_guilds",{"micros":7015},"coros_wait",{"micros":0}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: aeece522addd40a6d1deb4854785f261).
+05/06/2020 09:51:04 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:51:04 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:51:04 PM Shard ID None has connected to Gateway: ["gateway-prd-main-90bp",{"micros":129112,"calls":["discord-sessions-prd-1-21",{"micros":128053,"calls":["start_session",{"micros":126899,"calls":["api-prd-main-us-east1-rf0k",{"micros":121560,"calls":["get_user",{"micros":2833},"add_authorized_ip",{"micros":12490},"get_guilds",{"micros":13857},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":4,"calls":[]}]}]}] (Session ID: d5893406ecf69c4267b1d71db0a9f65f).
+05/06/2020 09:51:50 PM Heartbeat blocked for more than 5 seconds.
+05/06/2020 09:53:08 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:53:08 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:53:08 PM Shard ID None has connected to Gateway: ["gateway-prd-main-34lq",{"micros":57836,"calls":["discord-sessions-prd-1-3",{"micros":49350,"calls":["start_session",{"micros":46198,"calls":["api-prd-main-us-east1-s1km",{"micros":42983,"calls":["get_user",{"micros":1855},"add_authorized_ip",{"micros":1650},"get_guilds",{"micros":1558},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: a6d1611bdc510658b180683dd7411c1b).
+05/06/2020 09:53:33 PM Shard ID None has connected to Gateway: ["gateway-prd-main-rjvr",{"micros":52728,"calls":["discord-sessions-prd-1-10",{"micros":47015,"calls":["start_session",{"micros":41647,"calls":["api-prd-main-us-east1-99dh",{"micros":34328,"calls":["get_user",{"micros":6077},"add_authorized_ip",{"micros":1536},"get_guilds",{"micros":2189},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":4580,"calls":[]}]}]}] (Session ID: 731206f7e099399b233523ead2253c01).
+05/06/2020 09:53:36 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:54:49 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:54:49 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:54:49 PM Shard ID None has connected to Gateway: ["gateway-prd-main-ws92",{"micros":40121,"calls":["discord-sessions-prd-1-66",{"micros":36253,"calls":["start_session",{"micros":33718,"calls":["api-prd-main-us-east1-g2t6",{"micros":30913,"calls":["get_user",{"micros":2715},"add_authorized_ip",{"micros":3091},"get_guilds",{"micros":3803},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":0,"calls":[]}]}]}] (Session ID: 473a7ea12e56192772889852817a4133).
+05/06/2020 09:54:54 PM Admin Login: eric (199.116.115.140)
+05/06/2020 09:56:26 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:56:26 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:56:26 PM Shard ID None has connected to Gateway: ["gateway-prd-main-vjp9",{"micros":74847,"calls":["discord-sessions-prd-1-13",{"micros":73242,"calls":["start_session",{"micros":69310,"calls":["api-prd-main-us-east1-zgd4",{"micros":66320,"calls":["get_user",{"micros":3387},"add_authorized_ip",{"micros":3485},"get_guilds",{"micros":6948},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":3,"calls":[]},"presence_connect",{"micros":3125,"calls":[]}]}]}] (Session ID: 0e39a37d65a75458d868cd03239762d0).
+05/06/2020 09:56:47 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:56:47 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:56:47 PM Shard ID None has connected to Gateway: ["gateway-prd-main-h1zf",{"micros":50167,"calls":["discord-sessions-prd-1-50",{"micros":46613,"calls":["start_session",{"micros":41278,"calls":["api-prd-main-us-east1-rf0k",{"micros":37772,"calls":["get_user",{"micros":3887},"add_authorized_ip",{"micros":3256},"get_guilds",{"micros":3728},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":4613,"calls":[]}]}]}] (Session ID: 6f5e48d6200017809e503c10161a59ee).
+05/06/2020 09:58:50 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 09:58:50 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 09:58:50 PM Shard ID None has connected to Gateway: ["gateway-prd-main-bp9b",{"micros":44565,"calls":["discord-sessions-prd-1-19",{"micros":41743,"calls":["start_session",{"micros":36189,"calls":["api-prd-main-us-east1-nlcq",{"micros":33263,"calls":["get_user",{"micros":2565},"add_authorized_ip",{"micros":1568},"get_guilds",{"micros":3699},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":4837,"calls":[]}]}]}] (Session ID: 774e6b826070f11305b6901818320197).
+05/06/2020 10:00:35 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 10:00:35 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 10:00:35 PM Shard ID None has connected to Gateway: ["gateway-prd-main-phgg",{"micros":62744,"calls":["discord-sessions-prd-1-56",{"micros":57165,"calls":["start_session",{"micros":55546,"calls":["api-prd-main-us-east1-32dz",{"micros":49103,"calls":["get_user",{"micros":3228},"add_authorized_ip",{"micros":2356},"get_guilds",{"micros":2920},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":776,"calls":[]}]}]}] (Session ID: 4085b160f6b616713a4c2e14272fcf9d).
+05/06/2020 10:00:53 PM Admin Login: eric (199.116.115.140)
+05/06/2020 10:01:58 PM Shard ID None has connected to Gateway: ["gateway-prd-main-qc06",{"micros":52691,"calls":["discord-sessions-prd-1-20",{"micros":48782,"calls":["start_session",{"micros":45836,"calls":["api-prd-main-us-east1-pfkw",{"micros":37773,"calls":["get_user",{"micros":3718},"add_authorized_ip",{"micros":1621},"get_guilds",{"micros":2717},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":1847,"calls":[]}]}]}] (Session ID: 50fa6fd56767262d9d440e0535121193).
+05/06/2020 10:02:16 PM Shard ID None has connected to Gateway: ["gateway-prd-main-4pp7",{"micros":94713,"calls":["discord-sessions-prd-1-28",{"micros":93000,"calls":["start_session",{"micros":87643,"calls":["api-prd-main-us-east1-3w66",{"micros":84973,"calls":["get_user",{"micros":12404},"add_authorized_ip",{"micros":5851},"get_guilds",{"micros":3515},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":4110,"calls":[]}]}]}] (Session ID: a5a391fcee7fd5429d41a6e92e2e3dc2).
+05/06/2020 10:03:06 PM Admin Login: eric (199.116.115.140)
+05/06/2020 10:04:13 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 10:04:13 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 10:04:13 PM Shard ID None has connected to Gateway: ["gateway-prd-main-mcw9",{"micros":70069,"calls":["discord-sessions-prd-1-36",{"micros":68561,"calls":["start_session",{"micros":65386,"calls":["api-prd-main-us-east1-43m3",{"micros":61311,"calls":["get_user",{"micros":4541},"add_authorized_ip",{"micros":1717},"get_guilds",{"micros":3331},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":2320,"calls":[]}]}]}] (Session ID: 671707b44fd30440b103c188baa410df).
+05/06/2020 10:04:21 PM Admin Login: eric (199.116.115.140)
+05/06/2020 10:05:28 PM Admin Login: eric (199.116.115.140)
+05/06/2020 10:09:29 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 10:09:29 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 10:09:29 PM Shard ID None has connected to Gateway: ["gateway-prd-main-zb70",{"micros":46201,"calls":["discord-sessions-prd-1-79",{"micros":42596,"calls":["start_session",{"micros":41441,"calls":["api-prd-main-us-east1-gq5n",{"micros":38036,"calls":["get_user",{"micros":3811},"add_authorized_ip",{"micros":2768},"get_guilds",{"micros":1575},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":388,"calls":[]}]}]}] (Session ID: 669aee776456da738ce6b581318a190f).
+05/06/2020 10:11:30 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 10:11:30 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 10:11:30 PM Shard ID None has connected to Gateway: ["gateway-prd-main-r2bk",{"micros":60152,"calls":["discord-sessions-prd-1-59",{"micros":56445,"calls":["start_session",{"micros":49496,"calls":["api-prd-main-us-east1-jqmv",{"micros":41204,"calls":["get_user",{"micros":6489},"add_authorized_ip",{"micros":1451},"get_guilds",{"micros":3536},"coros_wait",{"micros":0}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: b8430e4aff3d0a644b14fa5adf3bbde4).
+05/06/2020 10:17:52 PM Shard ID None has connected to Gateway: ["gateway-prd-main-9vwq",{"micros":36811,"calls":["discord-sessions-prd-1-37",{"micros":34942,"calls":["start_session",{"micros":32628,"calls":["api-prd-main-us-east1-zvbz",{"micros":29815,"calls":["get_user",{"micros":2462},"add_authorized_ip",{"micros":3125},"get_guilds",{"micros":2692},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1324,"calls":[]}]}]}] (Session ID: 840097f1a085033df3ec5e19c47218eb).
+05/06/2020 10:23:29 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 10:23:29 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 10:23:29 PM Shard ID None has connected to Gateway: ["gateway-prd-main-rtp1",{"micros":80770,"calls":["discord-sessions-prd-1-68",{"micros":77313,"calls":["start_session",{"micros":71427,"calls":["api-prd-main-us-east1-trh0",{"micros":66653,"calls":["get_user",{"micros":5791},"add_authorized_ip",{"micros":3171},"get_guilds",{"micros":3978},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":2843,"calls":[]}]}]}] (Session ID: 5b769b8a81a24007bf8ad1417c019d3a).
+05/06/2020 10:23:43 PM Shard ID None has connected to Gateway: ["gateway-prd-main-nw87",{"micros":54433,"calls":["discord-sessions-prd-1-40",{"micros":46614,"calls":["start_session",{"micros":38893,"calls":["api-prd-main-us-east1-dc1q",{"micros":35261,"calls":["get_user",{"micros":3445},"add_authorized_ip",{"micros":1411},"get_guilds",{"micros":1203},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":0,"calls":[]}]}]}] (Session ID: 34403211ea4cdce2b56a5222f0f5cf83).
+05/06/2020 10:24:56 PM Shard ID None has connected to Gateway: ["gateway-prd-main-nw87",{"micros":101003,"calls":["discord-sessions-prd-1-22",{"micros":99307,"calls":["start_session",{"micros":98085,"calls":["api-prd-main-us-east1-zvbz",{"micros":95344,"calls":["get_user",{"micros":2650},"add_authorized_ip",{"micros":4286},"get_guilds",{"micros":6153},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":1,"calls":[]}]}]}] (Session ID: b1f1315d64b0fb6210dbd99bc150696c).
+05/06/2020 10:25:36 PM Shard ID None has connected to Gateway: ["gateway-prd-main-9pvs",{"micros":41051,"calls":["discord-sessions-prd-1-45",{"micros":39287,"calls":["start_session",{"micros":33563,"calls":["api-prd-main-us-east1-zgd4",{"micros":30559,"calls":["get_user",{"micros":2657},"add_authorized_ip",{"micros":1660},"get_guilds",{"micros":2210},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":4750,"calls":[]}]}]}] (Session ID: 69d13cac643672dcf48e2bb354779d8e).
+05/06/2020 10:41:11 PM Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6&compress=zlib-stream
+05/06/2020 10:41:11 PM Shard ID None has sent the IDENTIFY payload.
+05/06/2020 10:41:12 PM Shard ID None has connected to Gateway: ["gateway-prd-main-mfv8",{"micros":67651,"calls":["discord-sessions-prd-1-70",{"micros":66027,"calls":["start_session",{"micros":62713,"calls":["api-prd-main-us-east1-3ltz",{"micros":59063,"calls":["get_user",{"micros":3802},"add_authorized_ip",{"micros":2234},"get_guilds",{"micros":11460},"coros_wait",{"micros":2}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":2610,"calls":[]}]}]}] (Session ID: 9f8b3515fe8b231686c11d53ce80f76c).
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      05/07/2020 08:24:23 AM Admin Login: eric (199.116.115.145)
+05/11/2020 11:21:01 PM Admin Login: eric (199.116.115.146)
+05/18/2020 01:29:16 AM Admin Login: eric (73.72.72.182)
+05/24/2020 04:44:39 PM Admin Login: eric (199.116.115.133)
+05/24/2020 04:52:39 PM Admin Login: eric (199.116.115.133)
+05/24/2020 04:52:40 PM Admin Login: eric (199.116.115.133)
+05/24/2020 04:54:03 PM Admin Login: eric (199.116.115.133)
+07/25/2020 02:21:37 PM Admin Login: eric (192.168.50.32)
+07/25/2020 02:22:00 PM Admin Login: eric (192.168.50.32)
+07/25/2020 02:29:16 PM Admin Login: eric (192.168.50.32)
+07/25/2020 02:58:35 PM Security - Bad Login: egire (192.168.50.32)
+07/25/2020 03:09:53 PM Admin Login: eric (192.168.50.32)
+07/25/2020 03:10:28 PM Admin Login: eric (192.168.50.32)
+07/25/2020 03:14:14 PM Admin Login: eric (192.168.50.32)
+07/25/2020 03:15:42 PM Admin Login: eric (192.168.50.32)
+07/25/2020 03:21:33 PM Admin Login: eric (192.168.50.32)
+07/25/2020 04:34:48 PM Admin Login: eric (192.168.50.32)
+07/25/2020 04:40:08 PM Admin Login: eric (192.168.50.32)
+07/25/2020 04:43:59 PM Admin Login: eric (192.168.50.32)
+07/25/2020 04:44:32 PM Admin Login: eric (192.168.50.32)
+07/25/2020 04:45:38 PM Admin Login: eric (192.168.50.32)
+07/25/2020 04:48:47 PM Admin Login: eric (192.168.50.32)
+07/26/2020 02:49:09 PM Admin Login: eric (192.168.50.32)
+07/26/2020 10:45:36 PM Admin Login: eric (192.168.50.32)
+07/28/2020 04:15:36 PM Admin Login: eric (192.168.50.32)
+07/28/2020 05:17:25 PM Admin Login: eric (192.168.50.32)
+07/29/2020 08:47:22 AM Admin Login: eric (192.168.50.32)
+07/29/2020 08:50:05 AM Admin Login: eric (192.168.50.32)
+07/29/2020 08:58:59 AM Admin Login: eric (192.168.50.32)
+07/29/2020 09:08:31 AM Admin Login: eric (192.168.50.32)
+07/31/2020 04:26:05 PM Admin Login: eric (192.168.50.32)
+08/26/2020 05:47:00 PM Admin Login: eric (192.168.50.32)
+08/26/2020 05:53:22 PM Admin Login: eric (192.168.50.32)
+08/26/2020 06:33:20 PM Admin Login: eric (192.168.50.32)
+08/27/2020 10:51:41 AM Admin Login: eric (192.168.50.32)
+01/04/2021 08:10:00 PM Admin Login: eric (192.168.50.32)
+01/04/2021 08:11:05 PM Admin Login: eric (192.168.50.32)
+01/04/2021 08:13:03 PM Admin Login: eric (192.168.50.32)
+01/04/2021 08:17:20 PM Admin Login: eric (192.168.50.32)
+01/04/2021 08:36:21 PM Admin Login: eric (192.168.50.32)
+01/04/2021 08:36:22 PM Admin Login: eric (192.168.50.32)

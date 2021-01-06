@@ -40,13 +40,13 @@ Document serves to capture the hardware configuration of KBOT to facilitate soft
     *   JSON sensor data encapsulation with sensor fusion
     *   Multi-modal control (partial control, full control, AI, ML, CV)
 *   Control UI
-    *   CONTROL: [http://th3ri5k.mynetgear.com/kbot/controls.html](http://th3ri5k.mynetgear.com/kbot/controls.html)
-    *   LOGGING: [http://th3ri5k.mynetgear.com/kbot/log.html](http://th3ri5k.mynetgear.com/kbot/log.html)
-    *   SENORS: [http://th3ri5k.mynetgear.com/kbot/sensors.html](http://th3ri5k.mynetgear.com/kbot/sensors.html)
-    *   PIN EDITOR: [http://th3ri5k.mynetgear.com/kbot/editor.html](http://th3ri5k.mynetgear.com/kbot/editor.html)
-    *   VIDEO: [http://th3ri5k.mynetgear.com/video](http://th3ri5k.mynetgear.com/video)
-    *   LOGIN: [http://th3ri5k.mynetgear.com/kbot/](http://th3ri5k.mynetgear.com/kbot/)
-    *   REGISTER: [http://th3ri5k.mynetgear.com/kbot/register.html](http://th3ri5k.mynetgear.com/kbot/register.html)
+    *   CONTROL: [http://.mynetgear.com/kbot/controls.html](http://.mynetgear.com/kbot/controls.html)
+    *   LOGGING: [http://.mynetgear.com/kbot/log.html](http://.mynetgear.com/kbot/log.html)
+    *   SENORS: [http://.mynetgear.com/kbot/sensors.html](http://.mynetgear.com/kbot/sensors.html)
+    *   PIN EDITOR: [http://.mynetgear.com/kbot/editor.html](http://.mynetgear.com/kbot/editor.html)
+    *   VIDEO: [http://.mynetgear.com/video](http://.mynetgear.com/video)
+    *   LOGIN: [http://.mynetgear.com/kbot/](http://.mynetgear.com/kbot/)
+    *   REGISTER: [http://.mynetgear.com/kbot/register.html](http://.mynetgear.com/kbot/register.html)
 *   Login Credentials
     *   Username: test
     *   Password: test
